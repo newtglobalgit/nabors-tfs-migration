@@ -1,13 +1,15 @@
 import logging
 import requests
 from requests_ntlm import HttpNtlmAuth
+
+
 from requests.exceptions import ConnectionError
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-username = 'jayakarthi'
-password = 'orkut2009@'
+username = 'ujjawal'
+password = 'Trade@1234'
 TfsServer = '192.168.3.197'
 NameOfCollection = 'DefaultCollection'
 NameOfProject = 'DPROG'
