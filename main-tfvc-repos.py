@@ -2,7 +2,6 @@ from tfs import TFSAPI
 from requests_ntlm import HttpNtlmAuth
 from credentials import cred, server_urls, projects
 import requests
-#from bs4 import BeautifulSoup
 
 user = cred.get('USER')
 password = cred.get('PASSWORD')
@@ -16,8 +15,8 @@ headers = {
 tfs = TFSAPI(url, user=user, password=password, auth_type=HttpNtlmAuth)
 
 projects = tfs.get_projects()
-#for project in projects:
-#    print(project.name)
+for project in projects:
+    print(project.name)
 
 repositories = tfs.get_gitrepositories()
 
