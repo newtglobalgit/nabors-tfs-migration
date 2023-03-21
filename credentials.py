@@ -1,16 +1,18 @@
 # secrets.py
 import os
 cred = {
-        'USER': "Administrator",
-        'PASSWORD': "Obvious2023",
+    'USER': "Administrator",
+    'PASSWORD': "Obvious2023",
     'token': "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",
     'api_base_url': "https://api.github.com",
     'owner': "UjjAwal021"
 }
+
 data = {
-    "name": "tfs-migration12",
+    "name": "tfs-migration",
     "description": "migration repository",
-    "private": False
+    "private": False,
+    "directory_path": 'ascii'
 }
 urls = {
     'http_url': "http://192.168.3.197:8080/tfs/DefaultCollection/{projects}/_apis/_versionControl",
@@ -20,12 +22,19 @@ server_urls = {
     'http_url': "http://192.168.3.197:8080/tfs/",
     'https_url': "https://192.168.3.197/tfs/"
 }
+
 """ path = {
     'repos': os.path.join("C:", "Users", "Administrator", "Source", "Repos")
 } """
+
 path = {
     'repos': "C:/Users/Administrator/Source/Repos/"
 }
+
+commit = {
+    'message': "dummy folder creation"
+}
+
 server = {
     'host': "http://192.168.3.197",
     'https_url': "https://192.168.3.197"
