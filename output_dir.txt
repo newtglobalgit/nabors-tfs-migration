@@ -1,0 +1,58 @@
+dprog-demo
+------------
+dir Binary                          
+*---------*
+dir Build                           
+*---------*
+dir Infinity                        
+Directory:Clients                            
+*---------*
+Directory:Exceptions                         
+*---------*
+Directory:Models                             
+*---------*
+Directory:Util                               
+*---------*
+*---------*
+dir Infinity.Client                 
+Directory:Properties                      
+*---------*
+*---------*
+dir infinity.net                    
+Directory:Infinity                     
+*---------*
+Directory:Infinity.Client              
+*---------*
+Directory:Infinity.Tests               
+*---------*
+*---------*
+dir Infinity.Tests                  
+Directory:Properties                               
+*---------*
+Directory:Resources                                
+*---------*
+*---------*
+dprog-net 
+------------
+dir Binary                             
+*---------*
+dir Build                              
+*---------*
+dir Main                               
+*---------*
+dir Prod                               
+*---------*
+dir Test                               
+*---------*
+tfs-test  
+------------
+dir Binary          
+*---------*
+dir Build           
+*---------*
+dir Main            
+*---------*
+dir Prod            
+*---------*
+dir Test            
+*---------*
