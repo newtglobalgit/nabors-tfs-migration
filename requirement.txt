@@ -1,0 +1,9 @@
+tfs
+requests_ntlm
+pprint
+github
+chardet
+requests
+winrm
+openpyxl
+subprocess
