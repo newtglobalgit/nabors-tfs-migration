@@ -16,6 +16,9 @@ print(tfs)
 
 changesets = tfs.get_changesets()
 
+branch_name = tfs.tfvc.get_branch()[0]['name']
+print(branch_name)
+
 
 for changeset in changesets:
     pprint.pprint(changeset)

@@ -9,7 +9,7 @@ cred = {
 }
 
 data = {
-    "name": "tfs-migration",
+    "name": "tfs-migration12",
     "description": "migration repository",
     "private": False,
     "directory_path": 'ascii'
@@ -28,7 +28,8 @@ server_urls = {
 } """
 
 path = {
-    'repos': "C:/Users/Administrator/Source/Repos/"
+    'repos': "C:/Users/Administrator/Source/Repos/",
+    'loc_repo': "C:/TFS/tfs-migration12"
 }
 
 commit = {

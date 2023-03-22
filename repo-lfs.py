@@ -1,7 +1,7 @@
 import git
 from github import Github
 import os
-from credentials import cred, data
+from credentials import cred, data, path
 
 
 access_token = cred.get('token')
@@ -9,55 +9,75 @@ GITHUB_REPO = data.get('name')
 g = Github(access_token)
 folder_prefix = "Asii/"
 user = g.get_user()
-repo = user.create_repo(GITHUB_REPO)
+repo = user.create_repo(GITHUB_REPO, auto_init=True)
 
-# repo_path = "C:/TFS/tfs-migration12"
-# repo = git.Repo(repo_path)
+project_dir = path.get('loc_repo')
 
-# repo.git.execute(["git", "lfs", "install"])
+# Initialize a Git repository in the project directory
+repo = git.Repo.init(project_dir)
 
-# repo.git.execute(["git", "lfs", "track", "*.exe"])
-
-# # exe_file = "C:/TFS/tfs-migration12/x64.dll"
-
-# repo.git.add(".")
-
-# commit_message = "Add exe file to Git LFS"
-# repo.git.commit("-m", commit_message)
-
-# repo.git.execute(["git", "push", "origin", "master"])
-
-# print("Successfully pushed")
-
-
-import os
-
-# Define the path to the project directory
-project_dir = "C:/TFS/tfs-migration12"
-
-# Change to the directory of the project
-os.chdir(project_dir)
+remote_name = "origin"
+remote_branch_name = "master"
+remote_branch = repo.remote(remote_name).refs[remote_branch_name]
+local_branch = repo.heads.master
+local_branch.set_tracking_branch(remote_branch)
 
 # Initialize Git LFS for the project
-os.system("git lfs install")
+repo.git.lfs("install")
 
-# Loop through all subdirectories in the project directory
-for dirpath, dirnames, filenames in os.walk("."):
-    # Change to the subdirectory
-    os.chdir(dirpath)
+# Function to check if a file is a binary file
+def is_binary_file(filepath):
+    with open(filepath, 'rb') as f:
+        for _ in range(10):  # Read 10 chunks of 1024 bytes each
+            chunk = f.read(1024)
+            if b'\0' in chunk:
+                return True
+    return False
 
-    # Track all executable files in the subdirectory and its subdirectories
-    os.system("git lfs track '*.exe'")
+# Get the list of extensions to track with Git LFS from the user
+extensions = input("Enter a comma-separated list of file extensions to track with Git LFS: ")
+extensions = extensions.split(",")
 
-    # Add all files in the subdirectory and its subdirectories to Git
-    os.system("git add .")
+# Define the root directory for the project
+root_dir = os.path.abspath(project_dir)
 
-    # Commit the changes with a message indicating the subdirectory name
-    os.system(f"git commit -m 'Upload {os.path.basename(dirpath)} to Git'")
+for root, dirs, files in os.walk(root_dir):
+    # Exclude the .git directory
+    if ".git" in dirs:
+        dirs.remove(".git")
+    # Add all files to Git and upload binary files to Git LFS
+    for file in files:
+        filepath = os.path.join(root, file)
+        print(filepath)
+        if os.path.splitext(filepath)[1] in extensions and is_binary_file(filepath):
+            repo.git.lfs("track", filepath)
+        repo.index.add([filepath])
 
-    # Return to the project directory
-    os.chdir(project_dir)
+# repo.index.commit("Upload project to Git")
+repo.index.commit("Upload project to Git", skip_hooks=True)
 
-# Push the changes to the remote repository
-os.system("git push origin master")
+
+# Get the name of the default branch from the repository object
+default_branch = repo.active_branch.name
+
+# Find the remote branch with the same name as the default branch
+remote_branches = [b for b in repo.heads if b.name == default_branch]
+if len(remote_branches) == 0:
+    raise ValueError(f"No remote branch found with name '{default_branch}'")
+remote_branch = remote_branches[0]
+
+# Get the name of the remote branch that the local branch is tracking
+tracking_branch = remote_branch.tracking_branch()
+if tracking_branch is None:
+    raise ValueError(f"No tracking branch found for local branch '{remote_branch.name}'")
+
+# Get the remote repository object for the tracking branch
+origin = repo.remote(name=tracking_branch.remote_name)
+
+# Add a new remote that points to the repository you just created
+repo.create_remote('origin', f"git@github.com:{user.login}/{GITHUB_REPO}.git")
+
+# Push changes to the repository
+repo.git.push('--set-upstream', 'origin', default_branch)
+
 

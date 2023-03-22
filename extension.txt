@@ -1,0 +1,75 @@
+Files grouped by extension:
+.txt:
+	Binary.txt
+	Build.txt
+	Binary.txt
+	Build.txt
+	LICENSE.txt
+	LICENSE.txt
+	sample.txt
+	sample.txt.txt
+.csproj:
+	Infinity.csproj
+	Infinity.Client.csproj
+	Infinity.Tests.csproj
+.cs:
+	ITfsClientExecutor.cs
+	TfsClient.cs
+	TfsClientConfiguration.cs
+	TfsClientExecutor.cs
+	TfsRestRequest.cs
+	GitCommand.cs
+	Model.cs
+	Program.cs
+	ProjectCommand.cs
+	ClientExecutorFixture.cs
+	GitFixture.cs
+	MockClientFixture.cs
+	MockHttpMessageConfiguration.cs
+	MockHttpMessageHandler.cs
+	ObjectIdFixture.cs
+	ProjectFixture.cs
+	TeamFixture.cs
+	TeamRoomFixture.cs
+	UrlHelpersFixture.cs
+.config:
+	App.config
+	app.config
+.yml:
+	azure-pipelines.yml
+	azure-pipelines.yml
+.md:
+	CHANGES.md
+	README.md
+	CHANGES.md
+	README.md
+.sln:
+	Infinity.sln
+	Infinity.sln
+.png:
+	logo.png
+	logo.png
+.exe:
+	MicrosoftEdgeSetup.exe
+	SQL2019-SSEI-Eval.exe
+	VisualStudioSetup (1).exe
+Files without extension:
+	.gitattributes
+	.gitignore
+	.gitignore
+	.gitattributes
+	.gitignore
+	.gitattributes
+	.gitignore
+	.gitattributes
+	.gitignore
+Extension counts:
+	.txt: 8
+	.csproj: 3
+	.cs: 19
+	.config: 2
+	.yml: 2
+	.md: 4
+	.sln: 2
+	.png: 2
+	.exe: 3

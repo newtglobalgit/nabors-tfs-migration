@@ -13,15 +13,17 @@ all_files = []
 
 print(f"Repository '{GITHUB_REPO}' has been created.")
 
-folder_path = "dummies"
+folder_path = "."
 os.chdir(folder_path)
 print(f"Current working directory: {os.getcwd()}")
 
-git_prefix = 'dummy/'
-git_file = git_prefix + 'file.txt'
-for file_name in os.listdir('.'):
+git_file = 'todelete.txt'
+with open(git_file, 'r') as file:
+    content = file.read()
+
+""" for file_name in os.listdir('.'):
     with open(file_name, 'r') as file:
-        content = file.read()
+        content = file.read() """
 if git_file in all_files:
     contents = repo.get_contents(git_file)
     repo.update_file(contents.path, "committing files", content, contents.sha, branch="main")
@@ -29,11 +31,12 @@ if git_file in all_files:
 else:
     repo.create_file(git_file, "committing files", content, branch="main")
     print(git_file + ' CREATED')
-for file_name in os.listdir('.'):
+""" for file_name in os.listdir('.'):
     with open(file_name, 'r') as file:
         content = file.read()
         repo.create_file(file_name, f"Committing {file_name}", content)
-        print(f"{file_name} uploaded to {GITHUB_REPO}.")
+        print(f"{file_name} uploaded to {GITHUB_REPO}.") """
+
 print("temp file has been uploaded successfully.")
 contents = repo.get_contents("")
 
