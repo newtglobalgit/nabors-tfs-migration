@@ -18,13 +18,13 @@ projects = tfs.get_projects()
 for project in projects:
     print(project.name)
 
-repositories = tfs.get_gitrepositories()
+# repositories = tfs.get_gitrepositories()
 
-for repo in repositories:
-    print(repo.name)
-    repo_url = url+"DefaultCollection/_git/"+repo.name
-    print(repo_url)
+# for repo in repositories:
+#     print(repo.name)
+#     repo_url = url+"DefaultCollection/_git/"+repo.name
+#     print(repo_url)
 
-    response = requests.get(repo_url)
-    repo_content = response.json()
-    print(repo_content['value'])
+#     response = requests.get(repo_url)
+#     repo_content = response.json()
+#     print(repo_content['value'])

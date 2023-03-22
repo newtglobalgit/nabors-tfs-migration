@@ -9,7 +9,7 @@ cred = {
 }
 
 data = {
-    "name": "tfs-migration12",
+    "name": "tfs-migration",
     "description": "migration repository",
     "private": False,
     "directory_path": 'ascii'
