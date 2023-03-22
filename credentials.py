@@ -1,5 +1,5 @@
-# secrets.py
-import os
+# secrets / sensitive data store
+
 cred = {
     'USER': "Administrator",
     'PASSWORD': "Obvious2023",
@@ -14,18 +14,16 @@ data = {
     "private": False,
     "directory_path": 'ascii'
 }
+
 urls = {
     'http_url': "http://192.168.3.197:8080/tfs/DefaultCollection/{projects}/_apis/_versionControl",
     'https_url': "https://192.168.3.197/tfs/DefaultCollection/_apis/tfvc/repositories"
 }
+
 server_urls = {
     'http_url': "http://192.168.3.197:8080/tfs/",
     'https_url': "https://192.168.3.197/tfs/"
 }
-
-""" path = {
-    'repos': os.path.join("C:", "Users", "Administrator", "Source", "Repos")
-} """
 
 path = {
     'repos': "C:/Users/Administrator/Source/Repos/",
@@ -40,6 +38,7 @@ server = {
     'host': "http://192.168.3.197",
     'https_url': "https://192.168.3.197"
 }
+
 projects = {
     'project1': "DPROG",
     'project2': "Demo",
