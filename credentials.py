@@ -9,7 +9,7 @@ cred = {
 }
 
 data = {
-    "name": "Sample_Practice_Project",
+    "name": "DPROG",
     "description": "migration repository",
     "private": False,
     "directory_path": 'ascii'
