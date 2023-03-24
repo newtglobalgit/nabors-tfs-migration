@@ -13,18 +13,17 @@ Here are the general steps involved in migrating source code from TFS to Git:
 5. Train the users: Finally, you need to train the users on how to use Git, including how to clone the repository, commit changes, create branches, merge code, and resolve conflicts.
 
 ## Pre-requisites:
-1. python - Minimum 3.9 or Greater
-2. packages - requirement.txt
-3. Github - 1. User id and password
-            2. token
-4. 
+#### python - Minimum 3.9 or Greater
+#### packages - requirement.txt
+#### Github credentials - 1. User id and token
+#### git tfs 
 
 
 ## Program execution in sequential order: 
 First of all we have to execute 
 
 1. main-tfvc-repos.py
-This script will give a output list of all the repos that is there in tfs server.
+This script will give a output list of all the repos that is there in remote tfs server.
 
 2. main-winrm.py
 It will give two txt file 
@@ -35,10 +34,10 @@ It will give two txt file
 
 3. get_extension_of_file.py
 First this script will ask for a txt file for giving list of extension i.e.  output_file.txt
-Then it will ask for a name of output file and it will give all the extenion with file name and count of it.
+Then it will ask for a name of output file and it will give all the extension with file name and count of it.
 
 4. Commit_history.py
-This script will give a commit history Of a perticular project that is in tfs server.
+This script will give a commit history Of a particular project that is in tfs server.
 
 5. repo-lfs.py
 This script will create a new repo in github using user credentials and upload the tfs repos to git.
@@ -48,4 +47,6 @@ This script will create a new repo in github using user credentials and upload t
 1. 
 
 ## Goals:
+#### Migration of the Team Foundation Version Control[TFVC] source code with history of commits and branches to GitHUB repository.
+#### Migration of the Team Foundation Version Control[TFVC] work items with history of issues and changes to Azure DevOps Services.
 
