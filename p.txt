@@ -1,0 +1,46 @@
+Files grouped by extension:
+.txt:
+	Binary.txt
+Extension counts:
+	Build.txt
+Extension counts:
+.cs:
+	RevisionType.cs
+Extension counts:
+	TfsConflictException.cs
+Extension counts:
+	ProjectClient.cs
+Extension counts:
+	TeamClient.cs
+Extension counts:
+	DiffFilters.cs
+Extension counts:
+	BlobFormat.cs
+Extension counts:
+	ItemFilters.cs
+Extension counts:
+	TfsUnauthorizedException.cs
+Extension counts:
+	TfsRestException.cs
+Extension counts:
+	RevisionOptions.cs
+Extension counts:
+	PushFilters.cs
+Extension counts:
+	Revision.cs
+Extension counts:
+	PullRequestFilters.cs
+Extension counts:
+	GitClient.cs
+Extension counts:
+	TeamRoomClient.cs
+Extension counts:
+	CommitFilters.cs
+Extension counts:
+	RecursionLevel.cs
+Extension counts:
+	.txt: 2
+	.cs: 17
+Files Ignored:
+	.gitignore
+	.gitattributes

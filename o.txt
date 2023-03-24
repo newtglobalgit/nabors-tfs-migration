@@ -1,0 +1,10 @@
+Files grouped by extension:
+.txt:
+	Binary.txt
+Extension counts:
+	Build.txt
+Extension counts:
+	.txt: 2
+Files Ignored:
+	.gitignore
+	.gitattributes

@@ -16,12 +16,6 @@ project_dirs=["DPROG"]
 
 sess = winrm.Session(url, auth=(user, password), transport='ntlm')
 
-defpath = "C:\Demo\\tfs"
-
-cmd1 = 'git tfs clone '+server_url+'DefaultCollection $/dprog/infinity.net ' + defpath
-
-output1 = sess.run_ps(cmd1)
-
 file_name = set()
 
 
@@ -46,45 +40,42 @@ def get_directory_data(path):
                 file_name.add(each_file_name_parts[0])
 
 
+    extension_files = {}
+    
+    extension_counts = {}
+    
+    no_extension_files = []
+    
+    for line in file_name:
+        extension = os.path.splitext(line.strip())[1]
+        if extension:
+            if extension in extension_files:
+                extension_files[extension].append(line.strip())
+                extension_counts[extension] += 1
+            else:
+                extension_files[extension] = [line.strip()]
+                extension_counts[extension] = 1
+        else:
+            no_extension_files.append(line.strip())
+            
+    output_file = input("Enter the output file name: ")
+    with open(output_file, "w") as file:
+        file.write("Files grouped by extension:\n")
+        for extension, files in extension_files.items():
+            file.write(f"{extension}:\n")
+            for f in files:
+                file.write(f"\t{f}\n")
+                file.write("Extension counts:\n")
+
+        for extension, count in extension_counts.items():
+            file.write(f"\t{extension}: {count}\n")
+            
+        if no_extension_files:
+            file.write("Files Ignored:\n")
+            for f in no_extension_files:
+                file.write(f"\t{f}\n")
+
 get_directory_data(defpath)
 
 
-# dictionary to store the filenames with each extension
-extension_files = {}
-
-extension_counts = {}
-
-# list to store the files without any extension
-no_extension_files = []
-
-
-for line in file_name:
-    extension = os.path.splitext(line.strip())[1]
-    if extension:
-        if extension in extension_files:
-            extension_files[extension].append(line.strip())
-            extension_counts[extension] += 1
-        else:
-            extension_files[extension] = [line.strip()]
-            extension_counts[extension] = 1
-    else:
-        no_extension_files.append(line.strip())
-
-
-output_file = input("Enter the output file name: ")
-with open(output_file, "w") as file:
-    file.write("Files grouped by extension:\n")
-    for extension, files in extension_files.items():
-        file.write(f"{extension}:\n")
-        for f in files:
-            file.write(f"\t{f}\n")
-   
-    file.write("Extension counts:\n")
-    for extension, count in extension_counts.items():
-        file.write(f"\t{extension}: {count}\n")
-
-    if no_extension_files:
-        file.write("Files Ignored:\n")
-        for f in no_extension_files:
-            file.write(f"\t{f}\n")
 

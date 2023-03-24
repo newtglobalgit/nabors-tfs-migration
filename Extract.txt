@@ -1,0 +1,189 @@
+Files grouped by extension:
+.cs:
+	CommitLink.cs
+	TeamFixture.cs
+	BranchStatistics.cs
+	Link.cs
+	Model.cs
+	ITfsClientExecutor.cs
+	Revision.cs
+	TreeEntry.cs
+	Project.cs
+	PullRequestLinks.cs
+	TfsClientConfiguration.cs
+	Team.cs
+	ProcessTemplateCapabilities.cs
+	TfsRestRequest.cs
+	PushDetails.cs
+	Commit.cs
+	TeamRoom.cs
+	TeamRoomUserDetails.cs
+	Signature.cs
+	CommitFilters.cs
+	VersionControlCapabilities.cs
+	Tree.cs
+	Reference.cs
+	PullRequestStatus.cs
+	UrlHelpersFixture.cs
+	TfsClient.cs
+	TeamRoomMessage.cs
+	Identity.cs
+	Blob.cs
+	MockClientFixture.cs
+	Program.cs
+	TeamClient.cs
+	PushLinks.cs
+	CommitLinks.cs
+	VersionControlType.cs
+	PushFilters.cs
+	ObjectType.cs
+	Resources.Designer.cs
+	GitFixture.cs
+	PullRequest.cs
+	ObjectIdFixture.cs
+	ProjectState.cs
+	TeamRoomFixture.cs
+	MockHttpMessageConfiguration.cs
+	PullRequestMergeStatus.cs
+	CommitItem.cs
+	BlobLinks.cs
+	RefUpdate.cs
+	PullRequestReviewer.cs
+	TfsRestException.cs
+	TeamRoomClient.cs
+	Repository.cs
+	WebApiTagDefinition.cs
+	Sequence.cs
+	ContentMetadata.cs
+	ChangeType.cs
+	ItemFilters.cs
+	ProjectLinks.cs
+	CommitChange.cs
+	TfsConflictException.cs
+	RevisionOptions.cs
+	MockHttpMessageHandler.cs
+	BlobFormat.cs
+	DiffFilters.cs
+	ObjectId.cs
+	ProjectClient.cs
+	PullRequestVote.cs
+	ProjectFixture.cs
+	TreeLinks.cs
+	RecursionLevel.cs
+	ProjectCapabilities.cs
+	Assert.cs
+	GitCommand.cs
+	ClientExecutorFixture.cs
+	TfsClientExecutor.cs
+	Diff.cs
+	UriHelpers.cs
+	TfsUnauthorizedException.cs
+	TeamRoomMessageType.cs
+	AssemblyInfo.cs
+	ProjectCommand.cs
+	LinkUrl.cs
+	RevisionType.cs
+	Item.cs
+	GitClient.cs
+	PullRequestFilters.cs
+	CommitChangeCounts.cs
+.txt:
+	Git.GetPushesByPusher.txt
+	TeamRoom.CreateRoom.txt
+	Git.GetItemsBatch.txt
+	TeamRoom.CreateMessage.txt
+	Project.UpdateProject.txt
+	Git.GetCommitsBetweenTwoRevisions.txt
+	TeamRoom.UpdateMessage.txt
+	Git.GetPushCommits.txt
+	Git.GetCommitsByItem.txt
+	Git.GetCommits.txt
+	Git.GetReferencesWithFilter.txt
+	Git.GetRepositoriesForTeamProject.txt
+	Git.GetItemFolderRecursive.txt
+	Git.GetReferences.txt
+	Team.GetTeamMembers.txt
+	Git.CreatePullRequest.txt
+	Git.GetPullRequestReviewers.txt
+	Git.GetPullRequests.txt
+	Git.GetRepositories.txt
+	LICENSE.txt
+	Team.GetTeams.txt
+	Git.GetPushesByPage.txt
+	ascii_file.txt
+	Git.GetCommit.txt
+	Git.AddPullRequestReviewer.txt
+	Team.GetTeam.txt
+	Git.GetPushes.txt
+	Git.GetBlob.txt
+	Git.GetPullRequestsByTargetBranch.txt
+	Project.GetProjectWithCapabilities.txt
+	TeamRoom.GetUsers.txt
+	TeamRoom.UpdateRoom.txt
+	Git.GetBranchStatistics.txt
+	Git.GetBranchStatisticsForAllBranches.txt
+	Git.CreateRepository.txt
+	Git.GetPushWithReferences.txt
+	Git.GetBranchStatisticsAgainstVersion.txt
+	Git.GetTree.txt
+	Git.GetPullRequestReviewer.txt
+	Git.GetPullRequest.txt
+	Git.GetPush.txt
+	Git.GetCommitsToRevision.txt
+	Project.GetProjects.txt
+	Project.GetProject.txt
+	Git.GetCommitsPaged.txt
+	Git.GetItemFolder.txt
+	TeamRoom.GetRooms.txt
+	Git.GetDiff.txt
+	Git.GetCommitsByCommitter.txt
+	Git.UpdatePullRequest.txt
+	Git.RenameRepository.txt
+	TeamRoom.GetUser.txt
+	Git.GetCommitWithChangedItems.txt
+	TeamRoom.GetRoom.txt
+	TeamRoom.GetMessage.txt
+	Git.GetCommitsByDate.txt
+	Git.GetPullRequestsByStatus.txt
+	Git.UpdatePullRequestReviewer.txt
+	Git.GetPushesByDate.txt
+	Git.GetItemFile.txt
+	Git.GetRepository.txt
+	TeamRoom.GetMessages.txt
+.md:
+	README.md
+	CHANGES.md
+.csproj:
+	Infinity.csproj
+	Infinity.Tests.csproj
+	Infinity.Client.csproj
+.config:
+	app.config
+	App.config
+.pl:
+	test_from.txt.pl
+.yml:
+	azure-pipelines.yml
+.resx:
+	Resources.resx
+.sln:
+	Infinity.sln
+.png:
+	logo.png
+.bin:
+	2023-03-23.bin
+Extension counts:
+	.cs: 87
+	.txt: 62
+	.md: 2
+	.csproj: 3
+	.config: 2
+	.pl: 1
+	.yml: 1
+	.resx: 1
+	.sln: 1
+	.png: 1
+	.bin: 1
+Files Ignored:
+	.gitattributes
+	.gitignore

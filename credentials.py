@@ -9,7 +9,7 @@ cred = {
 }
 
 data = {
-    "name": "tfs-migration",
+    "name": "Sample_Practice_Project",
     "description": "migration repository",
     "private": False,
     "directory_path": 'ascii'
@@ -42,5 +42,6 @@ server = {
 projects = {
     'project1': "DPROG",
     'project2': "Demo",
-    'project3': "tfs-test"
+    'project3': "tfs-test",
+    'project4': "Sample_Practice_Project"
 }

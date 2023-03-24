@@ -1,6 +1,7 @@
 from github import Github 
 from credentials import cred, data 
 access_token = cred.get('token') 
+# GITHUB_REPO = data.get('name') 
 GITHUB_REPO = data.get('name') 
 g = Github(access_token) 
 target_repo = data.get('name') 
