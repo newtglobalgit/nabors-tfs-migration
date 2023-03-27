@@ -26,13 +26,13 @@ with Diagram("TFS Migration - Architecture", direction="LR", graph_attr=graph_at
             with Cluster("Source Code Management"):
                 with Cluster("GitHub"):
                     with SystemBoundary("GitHub LFS"):
-                        github = Container(
+                        github_lfs = Container(
                             name="GitHub LFS",
                             technology="Large file storage",
                             description="large file storage solution which manages the source code binaries and ascii on projects migration from Team Foundation Server 2013",
                         )
-                    with SystemBoundary("GitHub LFS"):
-                        github_lfs = Container(
+                    with SystemBoundary("GitHub SCM"):
+                        github = Container(
                             name="GitHub Repository",
                             technology="SCM",
                             description="Source code management solution which manages the source code on projects migration from Team Foundation Server 2013",
