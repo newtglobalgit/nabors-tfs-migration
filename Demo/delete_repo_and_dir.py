@@ -4,7 +4,6 @@ import shutil
 
 def delete_repo_and_dir(GITHUB_REPO, path):
     access_token = cred.get('token')
-    # GITHUB_REPO = data.get('name')
     g = Github(access_token)
     target_repo = data.get('name')
     repo = g.get_user().get_repo(target_repo)

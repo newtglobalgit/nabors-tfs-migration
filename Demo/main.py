@@ -10,7 +10,6 @@ git_pwd = cred.get('token')
 server_url = server_urls.get('http_url')
 projects_with_path = get_list_of_branch.get_list_of_branches()
 
-
 def migration(project, path, output_file):
     branch_name = path.split('/')[-1]
     defpath = os.path.join("C:\\", "Demo", project, branch_name)
@@ -29,24 +28,24 @@ def migration(project, path, output_file):
 
     git_dir_details.list_files(defpath, output_file)
     os.chdir(defpath)
-    
+
     try:
         subprocess.run(cmd2, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error removing origin remote: {e}")
-    
+
     try:
         subprocess.run(cmd3, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error adding GitHub remote: {e}")
         return
-    
+
     try:
         subprocess.run(cmd4, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error creating branch: {e}")
         return
-    
+
     try:
         subprocess.run(cmd5, shell=True, check=True)
     except subprocess.CalledProcessError as e:

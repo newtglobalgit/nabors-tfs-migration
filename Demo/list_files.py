@@ -1,10 +1,5 @@
 import os
-import csv
-import collections
-
-
-
-            
+           
 def find_files_with_extension(root_directory, extensions):
     output_file= "C:\\Final_Script\\list_of_file.txt"
     with open(output_file, 'w') as f:
@@ -15,9 +10,3 @@ def find_files_with_extension(root_directory, extensions):
                     if filename.endswith(extension):
                         file_path = os.path.join(dirpath, filename)
                         f.write(file_path + '\n')
-
-    
-
-
-
-

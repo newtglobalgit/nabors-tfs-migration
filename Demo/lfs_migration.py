@@ -1,19 +1,12 @@
-import csv
-import os
-import list_files
-import subprocess
-
+import csv, os, subprocess
 
 def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
-
     extensions= getting_binary_extensions(directory_path)
 
     with open(extensions_file_path, 'r') as f:
         reader = csv.reader(f)
         for row in reader:
             extensions.append(row[0])
-
-    # list_files.find_files_with_extension(directory_path, extensions)
 
     subprocess.run(['git', 'stash', 'save', 'Stashing changes'], cwd=directory_path)
     b = subprocess.run(['git', 'checkout', branch_name], cwd=directory_path)
