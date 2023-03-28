@@ -1,10 +1,4 @@
-import os
-import shutil
-import subprocess
-import lfs_migration
-import create_git_repo
-import git_dir_details
-import get_list_of_branch
+import os, shutil, subprocess, lfs_migration, create_git_repo, git_dir_details, get_list_of_branch
 from credentials import cred, server, path, server_urls
 
 user = cred.get('USER')
@@ -27,13 +21,12 @@ def migration(project, path, output_file):
     cmd4 = f'git checkout -b {branch_name}'
     cmd5 = f'git push -u origin {branch_name}'
 
-
     try:
         a=subprocess.run(cmd1, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error cloning TFS repository: {e}")
         return
-    
+
     git_dir_details.list_files(defpath, output_file)
     os.chdir(defpath)
     
@@ -59,12 +52,9 @@ def migration(project, path, output_file):
     except subprocess.CalledProcessError as e:
         print(f"Error pushing branch to GitHub: {e}")
         return
-    
+
     lfs_migration.upload_binary_to_git_lfs(defpath, csv_file_path, branch_name)
     shutil.rmtree(defpath, ignore_errors=True)
-
-
-
 
 for project, paths in projects_with_path.items():
     if project == 'CatCore':
@@ -73,8 +63,3 @@ for project, paths in projects_with_path.items():
         for path in paths:
             print(f"Migration for {path}")
             migration(project, path, output_file)
-
-
-
-
-
