@@ -1,7 +1,10 @@
 import os
+import time
 import winrm
-import get_list_of_branch
+import requests
 import repo_github
+import delete_repo_and_dir
+import get_list_of_branch
 from credentials import cred, server, path, server_urls
 
 user = cred.get('USER')
@@ -11,6 +14,7 @@ git_user = cred.get('owner')
 git_pwd = cred.get('token')
 server_url = server_urls.get('http_url')
 projects_with_path = get_list_of_branch.get_list_of_branches()
+defpath=''
 
 def migration(project, path):
     sess = winrm.Session(url, auth=(user, password), transport='ntlm')
@@ -28,9 +32,18 @@ def migration(project, path):
     sess.run_ps(ps_cmd + ';' + cmd3)
     sess.run_ps(ps_cmd + ';' + cmd4)
     sess.run_ps(ps_cmd + ';' + cmd5)
+
+
+
+
     
 for project, paths in projects_with_path.items():
     repo_github.create_repo(project)
     for path in paths:
         print(f"Migration for {path}")
         migration(project, path)
+
+
+time.sleep(600)
+delete_repo_and_dir(GITHUB_REPO,defpath)
+

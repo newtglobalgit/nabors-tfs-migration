@@ -27,8 +27,12 @@ server_urls = {
 
 path = {
     'repos': "C:/Users/Administrator/Source/Repos/",
-    'loc_repo': "C:/TFS/tfs-migration12"
+    'loc_repo': "C:/TFS/tfs-migration12",
+    'csv_file' : "C:\Final_Script\extension.csv",
+    'git_repo' : "https://github.com/UjjAwal021/CatCore.git",
+    'git_repo_path' : "C://usr//CatCore"
 }
+
 
 commit = {
     'message': "dummy folder creation"
