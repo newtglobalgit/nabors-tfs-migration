@@ -88,3 +88,10 @@ def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
                 except subprocess.CalledProcessError as e:
                     print(f"Error occurred: {e.stderr}")
     c = subprocess.run(['git', 'push'], cwd=directory_path)
+
+def clone_target_git():
+    repo_url = path.get('git_repo')
+    clone_directory = path.get('git_repo_path')
+    output_file = "C:\\Final_Script\\Target_repo_info"
+    subprocess.run(["git", "clone", repo_url, clone_directory])   
+    list_files(clone_directory, output_file)
