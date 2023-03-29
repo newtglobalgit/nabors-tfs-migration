@@ -1,4 +1,4 @@
-import os, re, csv, winrm, subprocess
+import os, re, csv, winrm, subprocess, collections
 from github import Github
 from credentials import cred, path, server, server_urls
 
@@ -9,6 +9,7 @@ server_url = server_urls.get('http_url')
 url = server.get('host')
 tfs_url = server_url+"DefaultCollection"
 sess = winrm.Session(url, auth=(user, password), transport='ntlm')
+file_types = collections.defaultdict(list)
 
 def create_repo(GITHUB_REPO):
     g = Github(access_token)
@@ -53,7 +54,7 @@ def list_files(directory, output_file):
 
 def getting_binary_extensions(defpath):
     binary_extensions = []
-    for root, files in os.walk(defpath):
+    for root, dir, files in os.walk(defpath):
         for file in files:
             file_path = os.path.join(root, file)
             with open(file_path, 'rb') as f:
@@ -89,9 +90,31 @@ def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
                     print(f"Error occurred: {e.stderr}")
     c = subprocess.run(['git', 'push'], cwd=directory_path)
 
+
+def file_with_extension(directory):
+    file_name = 'C://Users//ujjawalg//source//repos//demo-tfs//Reports.txt'
+    try:
+        with open(file_name, 'w') as f:
+            for root, dirs, files in os.walk(directory):
+                # Skip .git folders
+                for file in files:
+                    file_extension = os.path.splitext(file)[-1].lower()
+                    if file_extension not in ('.gitignore', '.git'):
+                        file_types[file_extension].append(file)
+                        
+            for file_type, files in file_types.items():
+                if file_type == '':
+                    f.write("Files without extension: \n")
+                    for file in files:
+                        if file not in ('.gitignore', '.git', 'HEAD', 'cleanup'):
+                            f.write(file + "\n")
+    except Exception as e:
+        print("An error occurred:", str(e))
+
 def clone_target_git():
     repo_url = path.get('git_repo')
     clone_directory = path.get('git_repo_path')
-    output_file = "C:\\Final_Script\\Target_repo_info"
-    subprocess.run(["git", "clone", repo_url, clone_directory])   
-    list_files(clone_directory, output_file)
+    output_file_name = 'C://Users//ujjawalg//source//repos//demo-tfs//Target_repo_info.txt'
+    subprocess.run(["git", "clone", repo_url, clone_directory])  
+    file_with_extension(clone_directory)
+    list_files(clone_directory, output_file_name)
