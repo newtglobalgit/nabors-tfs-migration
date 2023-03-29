@@ -9,7 +9,7 @@ cred = {
 }
 
 data = {
-    "name": "dprog",
+    "name": "CatCore",
     "description": "migration repository",
     "private": False,
     "directory_path": 'ascii'
@@ -44,8 +44,9 @@ server = {
 }
 
 projects = {
-    'project1': "DPROG",
+    'project1': "dprog",
     'project2': "Demo",
     'project3': "tfs-test",
-    'project4': "Sample_Practice_Project"
+    'project4': "Sample_Practice_Project",
+    'project5': "CatCore"
 }
