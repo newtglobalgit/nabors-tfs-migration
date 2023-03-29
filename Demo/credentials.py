@@ -33,7 +33,6 @@ path = {
     'git_repo_path' : "C://usr//CatCore"
 }
 
-
 commit = {
     'message': "dummy folder creation"
 }
