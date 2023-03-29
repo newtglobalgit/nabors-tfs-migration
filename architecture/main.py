@@ -37,5 +37,6 @@ with Diagram("TFS Migration - Architecture", direction="LR", graph_attr=graph_at
                         description="Source code management solution which manages the source code on projects migration from Team Foundation Server 2013",
                     )
 
-    github << Relationship("Source code migration") << TFS >> Relationship("Work Item migration") >> boards
-    github_lfs << Relationship("Binary / ASCII file migration") << TFS
+    TFS >> Relationship("Work Item migration") >> boards
+    TFS >> Relationship("Binary / ASCII file migration") >> github_lfs
+    TFS >> Relationship("Source code migration") >> github
