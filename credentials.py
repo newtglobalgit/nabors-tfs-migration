@@ -9,7 +9,7 @@ cred = {
 }
 
 data = {
-    "name": "dprog",
+    "name": "catcore",
     "description": "migration repository",
     "private": False,
     "directory_path": 'ascii'

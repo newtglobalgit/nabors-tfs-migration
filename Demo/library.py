@@ -166,10 +166,10 @@ def clone_target_git():
     target_list_of_files(clone_directory, output_file_name)
 
 
-# target_list_of_files("C://usr//CatCore", "C://Users//ujjawalg//Desktop//New folder//demo-tfs//Demo//Target_repo_info.txt")
+target_list_of_files("C://usr//CatCore", "C://Users//ujjawalg//Desktop//New folder//demo-tfs//Demo//Target_repo_info.txt")
 
 
-import subprocess
+""" import subprocess
 import os
 
 directory = "C://usr//CatCore"  # replace with your directory path
@@ -186,6 +186,6 @@ for line in output.splitlines():
         file_size = int(line_parts[-2])
         print(f"{filename}: {file_size} bytes")
     else:
-        print(f"Invalid line: {line}")
+        print(f"Invalid line: {line}") """
 
 
