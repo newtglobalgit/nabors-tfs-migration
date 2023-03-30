@@ -4,3 +4,5 @@ __pycache__/**
 **output**
 delete-githubpy
 **/assets/**
+Demo/__pycache__/credentials.cpython-39.pyc
+Demo/__pycache__/library.cpython-39.pyc

@@ -9,8 +9,9 @@ git_user = cred.get('owner')
 git_pwd = cred.get('token')
 server_url = server_urls.get('http_url')
 projects_with_path = library.get_list_of_branches()
+flag = 'True'
 
-def migration(project, path, output_file):
+def migration(project, path, output_file, flag):
     branch_name = path.split('/')[-1]
     defpath = os.path.join("C:\\", "Demo", project, branch_name)
 
@@ -25,7 +26,11 @@ def migration(project, path, output_file):
     except subprocess.CalledProcessError as e:
         print(f"Error cloning TFS repository: {e}")
         return
-    library.list_files(defpath, output_file)
+    
+    if flag == 'True':
+        library.source_list_of_files(defpath, output_file)
+    
+    flag = 'False'
     os.chdir(defpath)
     try:
         subprocess.run(cmd2, shell=True, check=True)
@@ -56,6 +61,6 @@ for project, paths in projects_with_path.items():
         output_file = "Source_repo_info"
         for path in paths:
             print(f"Migration for {path}")
-            migration(project, path, output_file)
+            migration(project, path, output_file, flag)
 
 library.clone_target_git()

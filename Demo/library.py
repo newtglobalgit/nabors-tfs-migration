@@ -10,6 +10,7 @@ url = server.get('host')
 tfs_url = server_url+"DefaultCollection"
 sess = winrm.Session(url, auth=(user, password), transport='ntlm')
 file_types = collections.defaultdict(list)
+cwd = os.getcwd()
 
 def create_repo(GITHUB_REPO):
     g = Github(access_token)
@@ -35,7 +36,7 @@ def get_list_of_branches():
     list(projects.keys())
     return projects
 
-def list_files(directory, output_file):
+def source_list_of_files(directory, output_file):
     file_count = 0
     folder_count = 0
     total_size = 0
@@ -50,7 +51,7 @@ def list_files(directory, output_file):
                 total_size += file_size
         f.write(f"Total folders: {folder_count}\n")
         f.write(f"Total files: {file_count}\n")
-        f.write(f"Total size: {total_size} bytes\n")
+        f.write(f"Total size: {total_size / (1024*1024):.2f} MB\n")
 
 def getting_binary_extensions(defpath):
     binary_extensions = []
@@ -92,7 +93,7 @@ def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
 
 
 def file_with_extension(directory):
-    file_name = 'C://Users//ujjawalg//source//repos//demo-tfs//Reports.txt'
+    file_name = cwd+'//Reports.txt'
     try:
         with open(file_name, 'w') as f:
             for root, dirs, files in os.walk(directory):
@@ -111,10 +112,80 @@ def file_with_extension(directory):
     except Exception as e:
         print("An error occurred:", str(e))
 
+
+import os
+import subprocess
+
+def target_list_of_files(directory, output_file):
+    file_count = 0
+    folder_count = 0
+    total_size = 0
+
+    with open(output_file, 'w') as f:
+        for root, dirs, files in os.walk(directory):
+            file_count += len(files)
+            folder_count += len(dirs)
+            for file in files:
+                file_path = os.path.join(root, file)
+                file_size = os.path.getsize(file_path)
+                total_size += file_size
+        f.write(f"Total folders: {folder_count}\n")
+        f.write(f"Total files: {file_count}\n")
+        f.write(f"Total size: {total_size / (1024*1024):.2f} MB\n")
+
+    # Get the output of the "git lfs ls-files" command
+    output = subprocess.check_output(['git', 'lfs', 'ls-files'], cwd=directory)
+
+    # Initialize variables for total LFS file count and size
+    lfs_file_count = 0
+    lfs_file_size = 0
+
+    # Parse the output to get the size of each LFS file
+    for line in output.splitlines():
+        words = line.split()
+        if len(words) <= 4:
+            filename = words
+            # file_size = int(words[0])
+            lfs_file_count += 1
+            lfs_file_size += file_size
+
+    # Write the Git LFS file count and size to the output file
+    with open(output_file, 'a') as f:
+        f.write(f"Total Git LFS files: {lfs_file_count}\n")
+        f.write(f"Total Git LFS file size: {lfs_file_size} bytes ({lfs_file_size/(1024*1024):.2f} MB)\n")
+
+
+
+
 def clone_target_git():
     repo_url = path.get('git_repo')
     clone_directory = path.get('git_repo_path')
-    output_file_name = 'C://Users//ujjawalg//source//repos//demo-tfs//Target_repo_info.txt'
+    output_file_name = cwd+'//Target_repo_info.txt'
     subprocess.run(["git", "clone", repo_url, clone_directory])  
     file_with_extension(clone_directory)
-    list_files(clone_directory, output_file_name)
+    target_list_of_files(clone_directory, output_file_name)
+
+
+# target_list_of_files("C://usr//CatCore", "C://Users//ujjawalg//Desktop//New folder//demo-tfs//Demo//Target_repo_info.txt")
+
+
+import subprocess
+import os
+
+directory = "C://usr//CatCore"  # replace with your directory path
+
+# Get the output of the "git lfs ls-files" command
+output = subprocess.check_output(['git', 'lfs', 'ls-files', '--size'], cwd=directory)
+output = output.decode('utf-8') # Decode the output from bytes to a string
+
+# Parse the output to get the size of each LFS file
+for line in output.splitlines():
+    line_parts = line.split()
+    if len(line_parts) >= 3:
+        filename = ' '.join(line_parts[1:-1])
+        file_size = int(line_parts[-2])
+        print(f"{filename}: {file_size} bytes")
+    else:
+        print(f"Invalid line: {line}")
+
+
