@@ -1,7 +1,0 @@
-Files without extension: 
-LICENSE
-config
-description
-index
-packed-refs
-exclude

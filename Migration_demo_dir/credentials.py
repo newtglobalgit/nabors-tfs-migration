@@ -1,15 +1,22 @@
 # secrets / sensitive data store
 
 cred = {
+    # 'USER': "khuram",
+    # 'PASSWORD': "kashmir$1299",
     'USER': "Administrator",
     'PASSWORD': "Obvious2023",
     'token': "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",
     'api_base_url': "https://api.github.com",
     'owner': "UjjAwal021"
 }
+server = {
+    'host': "http://192.168.3.197",
+    'https_url': "https://192.168.3.197"
+
+}
 
 data = {
-    "name": "catcore",
+    "name": "CatCore",
     "description": "migration repository",
     "private": False,
     "directory_path": 'ascii'
@@ -27,8 +34,12 @@ server_urls = {
 
 path = {
     'repos': "C:/Users/Administrator/Source/Repos/",
-    'loc_repo': "C:/TFS/tfs-migration12"
+    'loc_repo': "C:/TFS/tfs-migration12",
+    'csv_file' : "C://Users//ujjawalg//Desktop//New folder//demo-tfs//Demo//extension.csv",
+    'git_repo' : "https://github.com/UjjAwal021/CatCore.git",
+    'git_repo_path' : "C://Demo//usr//CatCore"
 }
+
 
 commit = {
     'message': "dummy folder creation"
@@ -40,8 +51,9 @@ server = {
 }
 
 projects = {
-    'project1': "DPROG",
+    'project1': "dprog",
     'project2': "Demo",
     'project3': "tfs-test",
-    'project4': "Sample_Practice_Project"
+    'project4': "Sample_Practice_Project",
+    'project5': "CatCore"
 }
