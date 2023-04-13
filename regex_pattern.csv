@@ -1,0 +1,8 @@
+^exe$
+^catcore.\\.exe$
+^catcore.*\\.exe.*
+^cat.*-.*\\.exe$
+^Nu.*
+\.so$
+^.a$
+^.out$
