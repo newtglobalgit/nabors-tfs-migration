@@ -12,42 +12,42 @@ password = cred.get('PASSWORD')
 source_dir_path = path.get('source_dir')
 
 start_time = time.time()
-def get_folder_info(root_folder_path):
-    global tfs_url
-    root_folder_path = os.path.abspath(os.path.join(root_folder_path, os.pardir))
-    folder_info_list = []
-    root_folder_name = os.path.basename(root_folder_path)
-    branches = get_list_of_branch.get_list_of_branches_path(tfs_url) 
-    branches = [b.replace('/', '\\') for b in branches] 
-    for root, dirs, files in os.walk(root_folder_path):
-        if any("$tf" in d for d in root.split(os.sep)):
-            continue
-        subfolder_depth = len(os.path.relpath(root, root_folder_path).split(os.sep))
-        if subfolder_depth > 15:
-            continue 
-        for dir in dirs:
-            if "$tf" in dir:
-                continue
-            subfolder_path = os.path.join(root, dir)
-            subfolder_name = os.path.basename(subfolder_path)
-            parent_folder_path = os.path.relpath(os.path.abspath(os.path.join(subfolder_path, os.pardir)), root_folder_path)
-            parent_folder_path = parent_folder_path.replace('/', '\\') 
-            if parent_folder_path in branches:
-                subfolder_type = "Branch"
-            else:
-                subfolder_type = "Folder"
-            folder_info_list.append([parent_folder_path, subfolder_name, "", subfolder_type, ""])
-        for file in files:
-            file_path = os.path.join(root, file)
-            file_name = os.path.basename(file_path)
-            file_extension = os.path.splitext(file_name)[1]
-            file_size = os.path.getsize(file_path)  
-            parent_folder_path = os.path.relpath(os.path.abspath(os.path.join(file_path, os.pardir)), root_folder_path)
-            parent_folder_path = parent_folder_path.replace('/', '\\') 
-            subfolder_name = os.path.basename(root)
-            folder_info_list.append([parent_folder_path, subfolder_name, file_name, file_extension, file_size])
-    df = pd.DataFrame(folder_info_list, columns=['ParentFolder', 'SubFolder', 'FileName', 'Type', 'FileSize(Byte)'])
-    return df
+# def get_folder_info(root_folder_path):
+#     global tfs_url
+#     root_folder_path = os.path.abspath(os.path.join(root_folder_path, os.pardir))
+#     folder_info_list = []
+#     root_folder_name = os.path.basename(root_folder_path)
+#     branches = get_list_of_branch.get_list_of_branches_path(tfs_url) 
+#     branches = [b.replace('/', '\\') for b in branches] 
+#     for root, dirs, files in os.walk(root_folder_path):
+#         if any("$tf" in d for d in root.split(os.sep)):
+#             continue
+#         subfolder_depth = len(os.path.relpath(root, root_folder_path).split(os.sep))
+#         if subfolder_depth > 15:
+#             continue 
+#         for dir in dirs:
+#             if "$tf" in dir:
+#                 continue
+#             subfolder_path = os.path.join(root, dir)
+#             subfolder_name = os.path.basename(subfolder_path)
+#             parent_folder_path = os.path.relpath(os.path.abspath(os.path.join(subfolder_path, os.pardir)), root_folder_path)
+#             parent_folder_path = parent_folder_path.replace('/', '\\') 
+#             if parent_folder_path in branches:
+#                 subfolder_type = "Branch"
+#             else:
+#                 subfolder_type = "Folder"
+#             folder_info_list.append([parent_folder_path, subfolder_name, "", subfolder_type, ""])
+#         for file in files:
+#             file_path = os.path.join(root, file)
+#             file_name = os.path.basename(file_path)
+#             file_extension = os.path.splitext(file_name)[1]
+#             file_size = os.path.getsize(file_path)  
+#             parent_folder_path = os.path.relpath(os.path.abspath(os.path.join(file_path, os.pardir)), root_folder_path)
+#             parent_folder_path = parent_folder_path.replace('/', '\\') 
+#             subfolder_name = os.path.basename(root)
+#             folder_info_list.append([parent_folder_path, subfolder_name, file_name, file_extension, file_size])
+#     df = pd.DataFrame(folder_info_list, columns=['ParentFolder', 'SubFolder', 'FileName', 'Type', 'FileSize(Byte)'])
+#     return df
 
 tfs = TFSAPI(tfs_url, user=username, password=password, auth_type=HttpNtlmAuth)
 
@@ -64,7 +64,7 @@ total_commit_count = 0
 last_author_name = None
 
 branches = get_list_of_branch.get_list_of_branches(tfs_url)
-for branch in branches:
+for branch_idx, branch in enumerate(branches):
     changesets = tfs.get_changesets(item_path=branch)
     last_commit_date = None
     total_commit_count = 0
@@ -95,15 +95,16 @@ for branch in branches:
     branch_status = 'inactive'
     # da = (datetime.datetime.utcnow() - dateutil.parser.parse(last_commit_date)).days
     # if total_commit_count >= 10 and da <= 365:
-    if (datetime.datetime.utcnow() - dateutil.parser.parse(last_commit_date)).days<=365:
+    if (datetime.datetime.utcnow() - dateutil.parser.parse(last_commit_date)).days<=180:
         branch_status = 'active'
     
     branch_name = branch.split('/')[-1]
+    branch_id = f"Branch{branch_idx+1}"
+    
+    commit_info_list.append({'Branch Name': branch_name,'Branch ID': branch_id, 'Branch path': branch, 'Total commit count': total_commit_count, 'Last Commit Date': last_commit_date, 'Last Cimmit By': last_author_name, 'BranchStatus': branch_status})
 
-    commit_info_list.append({'Branch Name': branch_name, 'Branch path': branch, 'Total commit count': total_commit_count, 'Last Commit Date': last_commit_date, 'Last Cimmit By': last_author_name, 'BranchStatus': branch_status})
 
-
-commit_df = pd.DataFrame(commit_info_list, columns=['Branch Name', 'Branch path', 'Total commit count', 'Last Commit Date', 'Last Cimmit By', 'BranchStatus'])
+commit_df = pd.DataFrame(commit_info_list, columns=['Branch Name','Branch ID', 'Branch path', 'Total commit count', 'Last Commit Date', 'Last Cimmit By', 'BranchStatus'])
 
 
 commit_messages = []
@@ -142,4 +143,4 @@ with pd.ExcelWriter(f'Discovery_Report_{today}.xlsx', mode='w') as writer:
         sheet_name = f'{branch_name}_Commits'
         commit_messages_df_branch.to_excel(writer, sheet_name=sheet_name, index=False)
     date_df.to_excel(writer, sheet_name='Current Date', index=False)
-    get_folder_info(source_dir_path).to_excel(writer, sheet_name='Folder Info', index=False)
+    # get_folder_info(source_dir_path).to_excel(writer, sheet_name='Folder Info', index=False)
