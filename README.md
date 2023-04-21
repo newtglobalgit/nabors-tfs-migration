@@ -35,22 +35,24 @@ credentials.py - defines the secrets / sensitive details in the file store.
 ## Program execution in sequential order: 
 First of all we have to execute 
 
-python main.py
+> pip install requirements.txt
+
+> python main.py
+
 This script will give a output list of all the repos that is there in remote tfs server.
 It will give two txt file 
 - output_dir.txt
      In this txt file we will get all the directory that is there in the project.
 - output_file.txt
-     In this txt file we will get all the files that is there in the project.
-First this script will ask for a txt file for giving list of extension i.e.  output_file.txt
-Then it will ask for a name of output file and it will give all the extension with file name and count of it.
-This script will give a commit history Of a particular project that is in tfs server.
-This script will create a new repo in github using user credentials and upload the tfs repos to git.
-
+In this txt file we will get all the files that is there in the project.
+- First this script will ask for a txt file for giving list of extension i.e.  output_file.txt
+- Then it will ask for a name of output file and it will give all the extension with file name and count of it.
+- This script will give a commit history Of a particular project that is in tfs server.
+- This script will create a new repo in github using user credentials and upload the tfs repos to git.
 
 ## Development in progress:
 
-## Goals:
-#### Migration of the Team Foundation Version Control[TFVC] source code with history of commits and branches to GitHUB repository.
-#### Migration of the Team Foundation Version Control[TFVC] work items with history of issues and changes to Azure DevOps Services.
+**Goals:**
+- Migration of the Team Foundation Version Control[TFVC] source code with history of commits and branches to GitHUB repository.
+- Migration of the Team Foundation Version Control[TFVC] work items with history of issues and changes to Azure DevOps Services.
 
