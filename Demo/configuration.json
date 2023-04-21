@@ -15,12 +15,12 @@
     },
     "Target": {
       "$type": "TfsTeamProjectConfig",
-      "Collection": "https://dev.azure.com/NewtADO/",
+      "Collection": "https://dev.azure.com/NewtADTF/",
       "Project":"catcore",
       "ReflectedWorkItemIDFieldName": "Custom.ReflectedWorkItemId",
       "AllowCrossProjectLinking": false,
       "AuthenticationMode": "AccessToken",
-      "PersonalAccessToken": "kowyu3uq3xm6ywwvsb55z2o4zsoqos2utrsnevviwplidcy2ojwq",
+      "PersonalAccessToken": "",
       "PersonalAccessTokenVariableName": "",
       "LanguageMaps": {
         "AreaPath": "Area",
