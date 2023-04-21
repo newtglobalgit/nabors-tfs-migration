@@ -49,7 +49,7 @@ def list_files(directory, output_file):
     file_count = 0
     folder_count = 0
     total_size = 0
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding="utf-8") as f:
         for root, dirs, files in os.walk(directory):
             file_count += len(files)
             folder_count += len(dirs)
@@ -81,7 +81,7 @@ def getting_binary_extensions(defpath):
 def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
     """Binary uploaded to git large file storage in GITHUB"""
     extensions= getting_binary_extensions(directory_path)
-    with open(extensions_file_path, 'r') as f:
+    with open(extensions_file_path, 'r', encoding="utf-8") as f:
         reader = csv.reader(f)
         for row in reader:
             extensions.append(row[0])
@@ -105,7 +105,7 @@ def file_with_extension(directory):
     """files with extension"""
     file_name = 'C://Users//ujjawalg//source//repos//demo-tfs//Reports.txt'
     try:
-        with open(file_name, 'w') as f:
+        with open(file_name, 'w', encoding="utf-8") as f:
             for files in os.walk(directory):
                 # Skip .git folders
                 for file in files:
