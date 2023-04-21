@@ -1,3 +1,7 @@
+"""
+  Main Execution code
+"""
+
 import os, shutil, subprocess, library
 from credentials import cred, server, path, server_urls, projects
 
@@ -21,7 +25,7 @@ def migration(project, path, output_file):
     cmd5 = f'git push -u origin {branch_name}'
 
     try:
-        a=subprocess.run(cmd1, shell=True, check=True)
+        subprocess.run(cmd1, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error cloning TFS repository: {e}")
         return
@@ -46,7 +50,7 @@ def migration(project, path, output_file):
     except subprocess.CalledProcessError as e:
         print(f"Error pushing branch to GitHub: {e}")
         return
-    
+
     library.upload_binary_to_git_lfs(defpath, csv_file_path, branch_name)
     shutil.rmtree(defpath, ignore_errors=True)
 
