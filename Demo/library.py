@@ -1,3 +1,6 @@
+"""
+  Library with set of methods
+"""
 import os, re, csv, winrm, subprocess, collections
 from github import Github
 from credentials import cred, path, server, server_urls
@@ -14,7 +17,7 @@ file_types = collections.defaultdict(list)
 def create_repo(GITHUB_REPO):
     g = Github(access_token)
     user = g.get_user()
-    repo = user.create_repo(GITHUB_REPO)
+    user.create_repo(GITHUB_REPO)
     print(f"Repository '{GITHUB_REPO}' has been created.")
 
 def get_list_of_branches():
@@ -54,7 +57,7 @@ def list_files(directory, output_file):
 
 def getting_binary_extensions(defpath):
     binary_extensions = []
-    for root, dir, files in os.walk(defpath):
+    for root, files in os.walk(defpath):
         for file in files:
             file_path = os.path.join(root, file)
             with open(file_path, 'rb') as f:
@@ -75,33 +78,31 @@ def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
         for row in reader:
             extensions.append(row[0])
     subprocess.run(['git', 'stash', 'save', 'Stashing changes'], cwd=directory_path)
-    b = subprocess.run(['git', 'checkout', branch_name], cwd=directory_path)
-    for root, dirs, files in os.walk(directory_path):
+    subprocess.run(['git', 'checkout', branch_name], cwd=directory_path)
+    for root, files in os.walk(directory_path):
         for file in files:
             file_ext = os.path.splitext(file)[1].lower()
             if file_ext in extensions:
                 try:
-                    h = subprocess.run(['git', 'lfs', 'install'], cwd=root)
-                    d = subprocess.run(['git', 'lfs', 'migrate', 'import', '--include', file, '--yes'], cwd=root)
-                    g = subprocess.run(['git', 'lfs', 'track', file], cwd=root)
+                    subprocess.run(['git', 'lfs', 'install'], cwd=root)
+                    subprocess.run(['git', 'lfs', 'migrate', 'import', '--include', file, '--yes'], cwd=root)
+                    subprocess.run(['git', 'lfs', 'track', file], cwd=root)
                     e = subprocess.run(['git', 'add', file], cwd=root)
                     f = subprocess.run(['git', 'commit', '-m', f'Moving {file} to Git LFS'], cwd=root)
                 except subprocess.CalledProcessError as e:
                     print(f"Error occurred: {e.stderr}")
-    c = subprocess.run(['git', 'push'], cwd=directory_path)
-
+    subprocess.run(['git', 'push'], cwd=directory_path)
 
 def file_with_extension(directory):
     file_name = 'C://Users//ujjawalg//source//repos//demo-tfs//Reports.txt'
     try:
         with open(file_name, 'w') as f:
-            for root, dirs, files in os.walk(directory):
+            for files in os.walk(directory):
                 # Skip .git folders
                 for file in files:
                     file_extension = os.path.splitext(file)[-1].lower()
                     if file_extension not in ('.gitignore', '.git'):
                         file_types[file_extension].append(file)
-                        
             for file_type, files in file_types.items():
                 if file_type == '':
                     f.write("Files without extension: \n")
@@ -115,6 +116,6 @@ def clone_target_git():
     repo_url = path.get('git_repo')
     clone_directory = path.get('git_repo_path')
     output_file_name = 'C://Users//ujjawalg//source//repos//demo-tfs//Target_repo_info.txt'
-    subprocess.run(["git", "clone", repo_url, clone_directory])  
+    subprocess.run(["git", "clone", repo_url, clone_directory])
     file_with_extension(clone_directory)
     list_files(clone_directory, output_file_name)
