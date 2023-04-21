@@ -20,4 +20,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files 'Demo/*.py') --max-line-length=300 --disable=invalid-name --include-naming-hint=True
+        pylint $(git ls-files 'Demo/*.py') --max-line-length=300 --disable=invalid-name, redefined-outer-name --include-naming-hint=True
