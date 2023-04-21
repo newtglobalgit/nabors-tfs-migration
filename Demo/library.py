@@ -85,21 +85,21 @@ def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
         reader = csv.reader(f)
         for row in reader:
             extensions.append(row[0])
-    subprocess.run(['git', 'stash', 'save', 'Stashing changes'], cwd=directory_path)
-    subprocess.run(['git', 'checkout', branch_name], cwd=directory_path)
+    subprocess.run(['git', 'stash', 'save', 'Stashing changes'], cwd=directory_path, check=False)
+    subprocess.run(['git', 'checkout', branch_name], cwd=directory_path, check=False)
     for root, files in os.walk(directory_path):
         for file in files:
             file_ext = os.path.splitext(file)[1].lower()
             if file_ext in extensions:
                 try:
-                    subprocess.run(['git', 'lfs', 'install'], cwd=root)
-                    subprocess.run(['git', 'lfs', 'migrate', 'import', '--include', file, '--yes'], cwd=root)
-                    subprocess.run(['git', 'lfs', 'track', file], cwd=root)
-                    e = subprocess.run(['git', 'add', file], cwd=root)
-                    f = subprocess.run(['git', 'commit', '-m', f'Moving {file} to Git LFS'], cwd=root)
+                    subprocess.run(['git', 'lfs', 'install'], cwd=root, check=False)
+                    subprocess.run(['git', 'lfs', 'migrate', 'import', '--include', file, '--yes'], cwd=root, check=False)
+                    subprocess.run(['git', 'lfs', 'track', file], cwd=root, check=False)
+                    e = subprocess.run(['git', 'add', file], cwd=root, check=False)
+                    f = subprocess.run(['git', 'commit', '-m', f'Moving {file} to Git LFS'], cwd=root, check=False)
                 except subprocess.CalledProcessError as e:
                     print(f"Error occurred: {e.stderr}")
-    subprocess.run(['git', 'push'], cwd=directory_path)
+    subprocess.run(['git', 'push'], cwd=directory_path, check=False)
 
 def file_with_extension(directory):
     """files with extension"""
@@ -126,6 +126,6 @@ def clone_target_git():
     repo_url = path.get('git_repo')
     clone_directory = path.get('git_repo_path')
     output_file_name = 'C://Users//ujjawalg//source//repos//demo-tfs//Target_repo_info.txt'
-    subprocess.run(["git", "clone", repo_url, clone_directory])
+    subprocess.run(["git", "clone", repo_url, clone_directory], check=False)
     file_with_extension(clone_directory)
     list_files(clone_directory, output_file_name)
