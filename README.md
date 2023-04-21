@@ -16,7 +16,7 @@ Here are the general steps involved in migrating source code from TFS to Git:
 
 ```mermaid
 graph LR
-A[on-premise[TFS Server]] -- Source Code --> B[Github Repo]
+A[TFS on-premise Server] -- Source Code --> B[Github Repo]
 A -- Binary files --> C[Github LFS]
 A -- Work Item Azure DevOps --> D[Azure Boards]
 ```
