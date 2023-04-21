@@ -22,10 +22,10 @@ A -- Work Item Azure DevOps --> D[Azure Boards]
 ```
 
 ## Pre-requisites:
-#### python - Minimum 3.9 or Greater
-#### packages - requirement.txt
-#### Github credentials - 1. User id and token
-#### git tfs 
+- python - Minimum 3.9 or Greater
+- packages - requirement.txt
+- Github credentials - 1. User id and token
+- git tfs 
 
 ## Code file details:
 main.py - performs the source code migration and workitem migration.
@@ -38,9 +38,9 @@ First of all we have to execute
 python main.py
 This script will give a output list of all the repos that is there in remote tfs server.
 It will give two txt file 
-(a). output_dir.txt
+- output_dir.txt
      In this txt file we will get all the directory that is there in the project.
-(b). output_file.txt
+- output_file.txt
      In this txt file we will get all the files that is there in the project.
 First this script will ask for a txt file for giving list of extension i.e.  output_file.txt
 Then it will ask for a name of output file and it will give all the extension with file name and count of it.
