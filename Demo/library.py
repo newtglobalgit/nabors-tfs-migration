@@ -1,7 +1,12 @@
 """
   Library with set of methods
 """
-import os, re, csv, winrm, subprocess, collections
+import os
+import re
+import subprocess
+import csv
+import winrm
+import collections
 from github import Github
 from credentials import cred, path, server, server_urls
 

@@ -1,8 +1,10 @@
 """
   Main Execution code
 """
-
-import os, shutil, subprocess, library
+import os
+import shutil
+import subprocess
+import library
 from credentials import cred, server, path, server_urls, projects
 
 user = cred.get('USER')
