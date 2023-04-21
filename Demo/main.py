@@ -17,6 +17,7 @@ server_url = server_urls.get('http_url')
 projects_with_path = library.get_list_of_branches()
 
 def migration(project, path, output_file):
+    """source code migration"""
     branch_name = path.split('/')[-1]
     defpath = os.path.join("C:\\", "Demo", project, branch_name)
 
@@ -55,7 +56,6 @@ def migration(project, path, output_file):
 
     library.upload_binary_to_git_lfs(defpath, csv_file_path, branch_name)
     shutil.rmtree(defpath, ignore_errors=True)
-
 for project, paths in projects_with_path.items():
     if project == projects.get('project5'):
         library.create_repo(project)
