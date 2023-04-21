@@ -53,7 +53,6 @@ def migration(project, path, output_file):
     except subprocess.CalledProcessError as e:
         print(f"Error pushing branch to GitHub: {e}")
         return
-
     library.upload_binary_to_git_lfs(defpath, csv_file_path, branch_name)
     shutil.rmtree(defpath, ignore_errors=True)
 for project, paths in projects_with_path.items():
