@@ -18,33 +18,28 @@ Here are the general steps involved in migrating source code from TFS to Git:
 #### Github credentials - 1. User id and token
 #### git tfs 
 
+## Code file details:
+main.py - performs the source code migration and workitem migration.
+library.py - defines the methods which are needed and reusability of methods across the execution.
+credentials.py - defines the secrets / sensitive details in the file store.
 
 ## Program execution in sequential order: 
 First of all we have to execute 
 
-1. main-tfvc-repos.py
+python main.py
 This script will give a output list of all the repos that is there in remote tfs server.
-
-2. main-winrm.py
 It will give two txt file 
 (a). output_dir.txt
      In this txt file we will get all the directory that is there in the project.
 (b). output_file.txt
      In this txt file we will get all the files that is there in the project.
-
-3. get_extension_of_file.py
 First this script will ask for a txt file for giving list of extension i.e.  output_file.txt
 Then it will ask for a name of output file and it will give all the extension with file name and count of it.
-
-4. Commit_history.py
 This script will give a commit history Of a particular project that is in tfs server.
-
-5. repo-lfs.py
 This script will create a new repo in github using user credentials and upload the tfs repos to git.
 
 
 ## Development in progress:
-1. 
 
 ## Goals:
 #### Migration of the Team Foundation Version Control[TFVC] source code with history of commits and branches to GitHUB repository.
