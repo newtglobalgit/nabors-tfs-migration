@@ -53,7 +53,7 @@ server = {
 projects = {
     'project1': "dprog",
     'project2': "Demo",
-    'project3': "tfs-test",
+    'project3': "tfs-ado",
     'project4': "Sample_Practice_Project",
     'project5': "CatCore"
 }

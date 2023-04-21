@@ -36,7 +36,7 @@ ado = {
 path = {
     'repos': "C:/Users/Administrator/Source/Repos/",
     'loc_repo': "C:/TFS/tfs-migration12",
-    'source_dir': "C://Users//ujjawalg//source//Workspaces//Enterprise Applications"
+    'source_dir': "C:\Discovery"
 }
 
 commit = {
@@ -53,5 +53,6 @@ projects = {
     'project2': "Demo",
     'project3': "tfs-test",
     'project4': "Sample_Practice_Project",
-    'project5': "CatCore"
+    'project5': "CatCore",
+    'project6': "tfs-ado"
 }

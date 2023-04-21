@@ -4,56 +4,52 @@ from tfs import TFSAPI
 from requests_ntlm import HttpNtlmAuth
 from datetime import datetime
 import datetime, get_list_of_branch
-from credentials import cred, path, server_urls
+from credentials import cred, path, server_urls, projects
+import Github_discovery_script
 
 tfs_url = server_urls.get('http_url')
 username = cred.get('USER')
 password = cred.get('PASSWORD')
 source_dir_path = path.get('source_dir')
+project = projects.get('project5')
+source_dir_path = os.path.join(source_dir_path, project)
+github_token = cred.get('token')
+repo_owner = cred.get('owner')
+files_list = []
 
 start_time = time.time()
-# def get_folder_info(root_folder_path):
-#     global tfs_url
-#     root_folder_path = os.path.abspath(os.path.join(root_folder_path, os.pardir))
-#     folder_info_list = []
-#     root_folder_name = os.path.basename(root_folder_path)
-#     branches = get_list_of_branch.get_list_of_branches_path(tfs_url) 
-#     branches = [b.replace('/', '\\') for b in branches] 
-#     for root, dirs, files in os.walk(root_folder_path):
-#         if any("$tf" in d for d in root.split(os.sep)):
-#             continue
-#         subfolder_depth = len(os.path.relpath(root, root_folder_path).split(os.sep))
-#         if subfolder_depth > 15:
-#             continue 
-#         for dir in dirs:
-#             if "$tf" in dir:
-#                 continue
-#             subfolder_path = os.path.join(root, dir)
-#             subfolder_name = os.path.basename(subfolder_path)
-#             parent_folder_path = os.path.relpath(os.path.abspath(os.path.join(subfolder_path, os.pardir)), root_folder_path)
-#             parent_folder_path = parent_folder_path.replace('/', '\\') 
-#             if parent_folder_path in branches:
-#                 subfolder_type = "Branch"
-#             else:
-#                 subfolder_type = "Folder"
-#             folder_info_list.append([parent_folder_path, subfolder_name, "", subfolder_type, ""])
-#         for file in files:
-#             file_path = os.path.join(root, file)
-#             file_name = os.path.basename(file_path)
-#             file_extension = os.path.splitext(file_name)[1]
-#             file_size = os.path.getsize(file_path)  
-#             parent_folder_path = os.path.relpath(os.path.abspath(os.path.join(file_path, os.pardir)), root_folder_path)
-#             parent_folder_path = parent_folder_path.replace('/', '\\') 
-#             subfolder_name = os.path.basename(root)
-#             folder_info_list.append([parent_folder_path, subfolder_name, file_name, file_extension, file_size])
-#     df = pd.DataFrame(folder_info_list, columns=['ParentFolder', 'SubFolder', 'FileName', 'Type', 'FileSize(Byte)'])
-#     return df
+def get_folder_info(path):
+    global files_list
+    rows = []
+    root_path = os.path.join(path.split(project)[0], project)
+    for root, dirs, files in os.walk(path):
 
+        level = root.replace(path, '').count(os.sep)
+        dir_path = root.replace(root_path, "").lstrip('\\')
+        if ".git" in dirs:
+            dirs.remove(".git")  
+        if ".github" in dirs:
+            dirs.remove(".github")
+        for file in files:
+            if file == ".gitattributes":
+                continue  
+            filename = os.path.join(root, file)
+            files_list.append(filename)
+            size = os.path.getsize(filename)
+            file_type = os.path.splitext(filename)[1]
+            rows.append([dir_path, file, file_type, size])
+    return pd.DataFrame(rows, columns=["Directory", "File_Name", "File_Type", "Size(Byte)"])
+
+
+get_list_of_branch.migration(project, source_dir_path)
 tfs = TFSAPI(tfs_url, user=username, password=password, auth_type=HttpNtlmAuth)
 
 commit_info_list = []
 
+branches_with_folder = get_list_of_branch.get_branches_and_folders()
 branches = get_list_of_branch.get_list_of_branches(tfs_url)
+temp = get_list_of_branch.get_list_of_branches(tfs_url)
+
 branch_count = 0
 for branch in branches:
     branch_count += 1
@@ -63,7 +59,6 @@ last_commit_date = None
 total_commit_count = 0
 last_author_name = None
 
-branches = get_list_of_branch.get_list_of_branches(tfs_url)
 for branch_idx, branch in enumerate(branches):
     changesets = tfs.get_changesets(item_path=branch)
     last_commit_date = None
@@ -91,21 +86,26 @@ for branch_idx, branch in enumerate(branches):
         else:
             last_commit_date = '<no date>'
     
-    # Calculate BranchStatus based on last commit date and commit count
     branch_status = 'inactive'
-    # da = (datetime.datetime.utcnow() - dateutil.parser.parse(last_commit_date)).days
-    # if total_commit_count >= 10 and da <= 365:
     if (datetime.datetime.utcnow() - dateutil.parser.parse(last_commit_date)).days<=180:
         branch_status = 'active'
     
     branch_name = branch.split('/')[-1]
-    branch_id = f"Branch{branch_idx+1}"
+    if branch in temp: 
+        branch_id = f"Branch{branch_idx+1}"
+    else:
+        branch_id = f"Folder"
     
-    commit_info_list.append({'Branch Name': branch_name,'Branch ID': branch_id, 'Branch path': branch, 'Total commit count': total_commit_count, 'Last Commit Date': last_commit_date, 'Last Cimmit By': last_author_name, 'BranchStatus': branch_status})
+    missing_branches = set(branches_with_folder) - set(branch.split('/')[-1] for branch in branches)
+    for missing_branch in missing_branches:
+        branches.append(f'$/{project}/{missing_branch}')
+    
+    Repo_Name = project
+        
+    commit_info_list.append({'Repo Name' : Repo_Name, 'Branch Name': branch_name,'Branch ID': branch_id, 'Branch path': branch, 'Total commit count': total_commit_count, 'Last Commit Date': last_commit_date, 'Last Commit By': last_author_name, 'BranchStatus': branch_status})
 
 
-commit_df = pd.DataFrame(commit_info_list, columns=['Branch Name','Branch ID', 'Branch path', 'Total commit count', 'Last Commit Date', 'Last Cimmit By', 'BranchStatus'])
-
+commit_df = pd.DataFrame(commit_info_list, columns=['Repo Name','Branch Name','Branch ID', 'Branch path', 'Total commit count', 'Last Commit Date', 'Last Commit By', 'BranchStatus'])
 
 commit_messages = []
 for branch in branches:
@@ -135,12 +135,25 @@ date_df = pd.DataFrame({'Date': [today], 'Time Taken': [time_taken]})
 
 with pd.ExcelWriter(f'Discovery_Report_{today}.xlsx', mode='w') as writer:
     
-    commit_df.to_excel(writer, sheet_name='Branch Info', index=False)
+    commit_df.to_excel(writer, sheet_name='Source_Branch_Info', index=False)
+
+    get_branch_details = Github_discovery_script.get_commit_info(github_token, repo_owner, project)
+    get_branch_details.to_excel(writer, sheet_name='Target_Branch_Info', index=False)
+
+    for branch in branches_with_folder:
+        branch_path = os.path.join(source_dir_path, branch)
+        get_folder_info(branch_path).to_excel(writer, sheet_name="src_"+branch, index=False)
+
+    git_branches = Github_discovery_script.list_of_github_branches(github_token, repo_owner, project)
+    for branch in git_branches:
+        sheet_name = "tgt_"+branch[:100]
+        Github_discovery_script.get_file_structure_to_excel(github_token, project, branch, repo_owner).to_excel(writer, sheet_name=sheet_name, index=False)
+
     for branch in branches:
         commit_messages_df_branch = [x[1] for x in commit_messages if x[0] == branch][0]
         commit_messages_df_branch = pd.DataFrame(commit_messages_df_branch, columns=['Branch', 'Commit Date & Time', 'Commit Message', 'Author'])
         branch_name = branch.split('/')[-1]
-        sheet_name = f'{branch_name}_Commits'
+        sheet_name = f'src_{branch_name}_Cmt'
         commit_messages_df_branch.to_excel(writer, sheet_name=sheet_name, index=False)
+        
     date_df.to_excel(writer, sheet_name='Current Date', index=False)
-    # get_folder_info(source_dir_path).to_excel(writer, sheet_name='Folder Info', index=False)

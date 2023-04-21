@@ -34,7 +34,7 @@ def migration(project, path, output_file):
         library.source_list_of_files(defpath, output_file)
         flag = 'False'
     
-    upload_github_actions.upload_github_actions(defpath)
+    # upload_github_actions.upload_github_actions(defpath)
 
     os.chdir(defpath)
     # try:
@@ -56,7 +56,7 @@ def migration(project, path, output_file):
     except subprocess.CalledProcessError as e:
         print(f"Error pushing branch to GitHub: {e}")
         return
-    upload_github_actions.git_push(defpath, branch_name)
+    # upload_github_actions.git_push(defpath, branch_name)
     
     library.upload_binary_to_git_lfs(defpath, csv_file_path, branch_name)
     library.upload_regex_binary_to_git_lfs(defpath, regex_pattern_file_path, branch_name)
@@ -72,3 +72,4 @@ for project, paths in projects_with_path.items():
             migration(project, path, output_file)
 
 library.clone_target_git()
+

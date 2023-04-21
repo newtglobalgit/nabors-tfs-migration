@@ -19,12 +19,32 @@ source_dir_list = []
 target_dir_list = []
 
 
+def delete_dir_and_repo(target_repo):
+    access_token = cred.get('token') 
+    g = Github(access_token) 
+    repo = g.get_user().get_repo(target_repo) 
+    repo.delete() 
+    print("repo deleted")
+    user = cred.get('USER')
+    password = cred.get('PASSWORD')
+    sess = winrm.Session("192.168.3.197", auth=(user, password), transport='ntlm')
+    p = subprocess.Popen(["powershell.exe", "Remove-Item -Path C:/Demo -Recurse -Force"]) 
+    p.communicate()
+
+
 def create_repo(GITHUB_REPO):
     warnings.filterwarnings("ignore")
     g = Github(access_token)
     user = g.get_user()
-    repo = user.create_repo(GITHUB_REPO)
-    print(f"Repository '{GITHUB_REPO}' has been created.")
+    repo_names = [repo.name for repo in g.get_user().get_repos()]
+    if GITHUB_REPO in repo_names:
+        print(f"Repository '{GITHUB_REPO}' already exists.")
+        delete_dir_and_repo(GITHUB_REPO)
+        create_repo(GITHUB_REPO)
+    else:
+        repo = user.create_repo(GITHUB_REPO)
+        print(f"Repository '{GITHUB_REPO}' has been created.")
+
 
 def get_file_checksum(file_path):
     with open(file_path, 'rb') as f:
@@ -273,4 +293,5 @@ def clone_target_git():
     
     # difference = list(set(source_dir_list) - set(target_dir_list))
     # print("The difference between the two lists is:", difference)
+
 
