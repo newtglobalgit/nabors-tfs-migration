@@ -1,11 +1,11 @@
 # secrets / sensitive data store
 
 cred = {
-    'USER': "Administrator",
-    'PASSWORD': "Obvious2023",
-    'token': "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",
+    'USER': "",
+    'PASSWORD': "",
+    'token': "",
     'api_base_url': "https://api.github.com",
-    'owner': "UjjAwal021"
+    'owner': ""
 }
 
 data = {

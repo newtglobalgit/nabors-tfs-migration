@@ -1,11 +1,11 @@
 # secrets / sensitive data store
 
 cred = {
-    'USER': "Administrator",
-    'PASSWORD': "Obvious2023",
-    'token': "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",
+    'USER': "",
+    'PASSWORD': "",
+    'token': "",
     'api_base_url': "https://api.github.com",
-    'owner': "UjjAwal021"
+    'owner': ""
 }
 
 data = {
@@ -29,7 +29,7 @@ path = {
     'repos': "C:/Users/Administrator/Source/Repos/",
     'loc_repo': "C:/TFS/tfs-migration12",
     'csv_file' : "C:\Final_Script\extension.csv",
-    'git_repo' : "https://github.com/UjjAwal021/CatCore.git",
+    'git_repo' : "https://github.com/{owner}/CatCore.git",
     'git_repo_path' : "C://usr//CatCore"
 }
 
