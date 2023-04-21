@@ -1,4 +1,6 @@
-# secrets / sensitive data store
+"""
+  Secrets / Sensitive data store
+"""
 
 cred = {
     'USER': "",
