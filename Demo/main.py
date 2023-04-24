@@ -55,12 +55,16 @@ def migration(project, path, output_file):
         return
     library.upload_binary_to_git_lfs(defpath, csv_file_path, branch_name)
     shutil.rmtree(defpath, ignore_errors=True)
-for project, paths in projects_with_path.items():
-    if project == projects.get('project5'):
-        library.create_repo(project)
-        output_file = "Source_repo_info"
-        for path in paths:
-            print(f"Migration for {path}")
-            migration(project, path, output_file)
 
-library.clone_target_git()
+def main():
+    for project, paths in projects_with_path.items():
+        if project == projects.get('project5'):
+            library.create_repo(project)
+            output_file = "Source_repo_info"
+            for path in paths:
+                print(f"Migration for {path}")
+                migration(project, path, output_file)
+    library.clone_target_git()
+
+if __name__ == '__main__':
+    main()
