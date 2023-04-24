@@ -5,8 +5,8 @@ import os
 import re
 import subprocess
 import csv
-import winrm
 import collections
+import winrm
 from github import Github
 from credentials import cred, path, server, server_urls
 
@@ -64,9 +64,11 @@ def list_files(directory, output_file):
 def getting_binary_extensions(defpath):
     """Binary extensions classifier"""
     binary_extensions = []
-    for root, files in os.walk(defpath):
+    for root, dirs, files in os.walk(defpath):
         for file in files:
             file_path = os.path.join(root, file)
+            if not os.path.isfile(file_path):  # skip directories
+                continue
             with open(file_path, 'rb') as f:
                 try:
                     is_binary = b'\0' in f.read(512)
@@ -76,6 +78,8 @@ def getting_binary_extensions(defpath):
                     extension = os.path.splitext(file_path)[1]
                     if extension not in binary_extensions:
                         binary_extensions.append(extension)
+        for dir in dirs:
+            pass
     return [ext for ext in binary_extensions if ext.startswith('.')]
 
 def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
@@ -87,7 +91,7 @@ def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
             extensions.append(row[0])
     subprocess.run(['git', 'stash', 'save', 'Stashing changes'], cwd=directory_path, check=False)
     subprocess.run(['git', 'checkout', branch_name], cwd=directory_path, check=False)
-    for root, files in os.walk(directory_path):
+    for root, dirs, files in os.walk(directory_path):
         for file in files:
             file_ext = os.path.splitext(file)[1].lower()
             if file_ext in extensions:
@@ -99,7 +103,7 @@ def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
                     f = subprocess.run(['git', 'commit', '-m', f'Moving {file} to Git LFS'], cwd=root, check=False)
                 except subprocess.CalledProcessError as e:
                     print(f"Error occurred: {e.stderr}")
-    subprocess.run(['git', 'push'], cwd=directory_path, check=False)
+        subprocess.run(['git', 'push'], cwd=directory_path, check=False)
 
 def file_with_extension(directory):
     """files with extension"""
