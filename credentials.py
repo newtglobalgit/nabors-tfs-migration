@@ -1,4 +1,6 @@
-# secrets / sensitive data store
+"""
+  Secrets / Sensitive data store
+"""
 
 cred = {
     'USER': "",
@@ -9,7 +11,7 @@ cred = {
 }
 
 data = {
-    "name": "dprog",
+    "name": "CatCore",
     "description": "migration repository",
     "private": False,
     "directory_path": 'ascii'
@@ -27,7 +29,10 @@ server_urls = {
 
 path = {
     'repos': "C:/Users/Administrator/Source/Repos/",
-    'loc_repo': "C:/TFS/tfs-migration12"
+    'loc_repo': "C:/TFS/tfs-migration12",
+    'csv_file' : r"C:\Final_Script\extension.csv",
+    'git_repo' : "https://github.com/{owner}/CatCore.git",
+    'git_repo_path' : "C://usr//CatCore"
 }
 
 commit = {
@@ -40,8 +45,9 @@ server = {
 }
 
 projects = {
-    'project1': "DPROG",
+    'project1': "dprog",
     'project2': "Demo",
     'project3': "tfs-test",
-    'project4': "Sample_Practice_Project"
+    'project4': "Sample_Practice_Project",
+    'project5': "CatCore"
 }
