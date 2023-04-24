@@ -57,6 +57,7 @@ def migration(project, path, output_file):
     shutil.rmtree(defpath, ignore_errors=True)
 
 def main():
+    """main source code migration module"""
     for project, paths in projects_with_path.items():
         if project == projects.get('project5'):
             library.create_repo(project)
