@@ -1,11 +1,14 @@
-import os, time ,dateutil
+'''
+Discovery script
+'''
+import os
+import time
+import dateutil
 import pandas as pd
+import datetime, get_list_of_branch
 from tfs import TFSAPI
 from requests_ntlm import HttpNtlmAuth
-from datetime import datetime
-import datetime, get_list_of_branch
 from credentials import cred, path, server_urls, projects
-import Github_discovery_script
 
 tfs_url = server_urls.get('http_url')
 username = cred.get('USER')
@@ -18,7 +21,11 @@ repo_owner = cred.get('owner')
 files_list = []
 
 start_time = time.time()
-def get_folder_info(path):
+today = datetime.date.today().strftime("%Y-%m-%d")
+
+
+
+def get_folder_info(path,project,branch):
     global files_list
     rows = []
     root_path = os.path.join(path.split(project)[0], project)
@@ -37,8 +44,11 @@ def get_folder_info(path):
             files_list.append(filename)
             size = os.path.getsize(filename)
             file_type = os.path.splitext(filename)[1]
-            rows.append([dir_path, file, file_type, size])
-    return pd.DataFrame(rows, columns=["Directory", "File_Name", "File_Type", "Size(Byte)"])
+            Repo_Name = project
+            Branch = branch
+            rows.append([Repo_Name,Branch,dir_path, file, file_type, size])
+    return pd.DataFrame(rows, columns=["Repo Name","Branch Name","Directory", "File_Name", "File_Type", "Size(Byte)"])
+
 
 
 get_list_of_branch.migration(project, source_dir_path)
@@ -123,31 +133,33 @@ for branch in branches:
                 print(f"Warning: Invalid date format: {date}")
         else:
             date = '<no date>'
-        commit_messages_branch.append({'Branch': branch, 'Commit ID': changeset_id, 'Commit Date & Time': date, 'Commit Message': comment, 'Author': author_name})
+        Repo_Name = project
+        commit_messages_branch.append({'Repo Name': project,'Branch': branch, 'Commit ID': changeset_id, 'Commit Date & Time': date, 'Commit Message': comment, 'Author': author_name})
     commit_messages_df_branch = pd.DataFrame(commit_messages_branch, columns=['Branch', 'Commit ID', 'Commit Date & Time', 'Commit Message', 'Author'])
     commit_messages.append((branch, commit_messages_df_branch))
 
 
-end_time = time.time()
-time_taken = end_time - start_time
-today = datetime.date.today().strftime("%Y-%m-%d")
-date_df = pd.DataFrame({'Date': [today], 'Time Taken': [time_taken]})
+def time_taken(start_time,today):
+    end_time = time.time()
+    time_taken = end_time - start_time
+    date_df = pd.DataFrame({'Date': [today], 'Time Taken': [time_taken]})
+    return date_df
 
-with pd.ExcelWriter(f'Discovery_Report_{today}.xlsx', mode='w') as writer:
+with pd.ExcelWriter(f'Source_discovery_Report_{today}.xlsx', mode='w') as writer:
     
     commit_df.to_excel(writer, sheet_name='Source_Branch_Info', index=False)
 
-    get_branch_details = Github_discovery_script.get_commit_info(github_token, repo_owner, project)
-    get_branch_details.to_excel(writer, sheet_name='Target_Branch_Info', index=False)
+    # get_branch_details = Github_discovery_script.get_commit_info(github_token, repo_owner, project)
+    # get_branch_details.to_excel(writer, sheet_name='Target_Branch_Info', index=False)
 
     for branch in branches_with_folder:
         branch_path = os.path.join(source_dir_path, branch)
-        get_folder_info(branch_path).to_excel(writer, sheet_name="src_"+branch, index=False)
+        get_folder_info(branch_path,project,branch).to_excel(writer, sheet_name="src_"+branch, index=False)
 
-    git_branches = Github_discovery_script.list_of_github_branches(github_token, repo_owner, project)
-    for branch in git_branches:
-        sheet_name = "tgt_"+branch[:100]
-        Github_discovery_script.get_file_structure_to_excel(github_token, project, branch, repo_owner).to_excel(writer, sheet_name=sheet_name, index=False)
+    # git_branches = Github_discovery_script.list_of_github_branches(github_token, repo_owner, project)
+    # for branch in git_branches:
+    #     sheet_name = "tgt_"+branch[:100]
+    #     Github_discovery_script.get_file_structure_to_excel(github_token, project, branch, repo_owner).to_excel(writer, sheet_name=sheet_name, index=False)
 
     for branch in branches:
         commit_messages_df_branch = [x[1] for x in commit_messages if x[0] == branch][0]
@@ -156,4 +168,5 @@ with pd.ExcelWriter(f'Discovery_Report_{today}.xlsx', mode='w') as writer:
         sheet_name = f'src_{branch_name}_Cmt'
         commit_messages_df_branch.to_excel(writer, sheet_name=sheet_name, index=False)
         
+    date_df = time_taken(start_time,today)
     date_df.to_excel(writer, sheet_name='Current Date', index=False)
