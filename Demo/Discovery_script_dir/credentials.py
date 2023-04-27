@@ -6,7 +6,7 @@ cred = {
     'token': "", ## GITHUB Organization user token
     'api_base_url': "https://api.github.com",
     'owner': "", ## GITHUB Organization user
-    'org': ""
+    'org': "" ## GITHUB Organization name
 }
 
 data = {
@@ -51,4 +51,9 @@ projects = {
     'project4': "Sample_Practice_Project",
     'project5': "CatCore",
     'project6': "tfs-ado"
+}
+
+ado = {
+    'org1': "",
+    'token': ""
 }
