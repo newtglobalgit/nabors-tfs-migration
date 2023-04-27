@@ -21,6 +21,7 @@ A -- Binary files --> C[Github LFS]
 A -- Work Item Azure DevOps --> D[Azure Boards]
 A -- User / Access control --> E[Github Organization]
 A -- User / Access control --> D
+```
 
 ## Pre-requisites:
 - python - Minimum 3.9 or Greater
