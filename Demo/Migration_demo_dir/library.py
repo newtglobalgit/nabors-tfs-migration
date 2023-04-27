@@ -3,7 +3,6 @@ from github import Github
 from credentials import cred, path, server, server_urls
 
 access_token = cred.get('token')
-organization_name = cred.get('org')
 user = cred.get('USER')
 password = cred.get('PASSWORD')
 server_url = server_urls.get('http_url')
@@ -19,30 +18,33 @@ source_dir_total_size = 0
 source_dir_list = []
 target_dir_list = []
 
+
 def delete_dir_and_repo(target_repo):
-    access_token = cred.get('token')
-    git_authorize = Github(access_token)
-    repo = git_authorize.get_organization(organization_name).get_repo(target_repo)
-    repo.delete()
+    access_token = cred.get('token') 
+    g = Github(access_token) 
+    repo = g.get_user().get_repo(target_repo) 
+    repo.delete() 
     print("repo deleted")
+    user = cred.get('USER')
+    password = cred.get('PASSWORD')
     sess = winrm.Session("192.168.3.197", auth=(user, password), transport='ntlm')
     p = subprocess.Popen(["powershell.exe", "Remove-Item -Path C:/Demo -Recurse -Force"]) 
     p.communicate()
 
 
-def create_repo(github_repo):
+def create_repo(GITHUB_REPO):
     warnings.filterwarnings("ignore")
-    git_authorize = Github(access_token)
-    user = git_authorize.get_organization(organization_name)
-    repo_names = [repo.name for repo in git_authorize.get_organization(organization_name).get_repos()]
-    if github_repo in repo_names:
-        print(f"Repository '{github_repo}' already exists.")
-        delete_dir_and_repo(github_repo)
-        create_repo(github_repo)
-        print(f"Existing Repository '{github_repo}' removed and new '{github_repo}' has been created.")
+    g = Github(access_token)
+    user = g.get_user()
+    repo_names = [repo.name for repo in g.get_user().get_repos()]
+    if GITHUB_REPO in repo_names:
+        print(f"Repository '{GITHUB_REPO}' already exists.")
+        delete_dir_and_repo(GITHUB_REPO)
+        create_repo(GITHUB_REPO)
     else:
-        user.create_repo(github_repo)
-        print(f"Repository '{github_repo}' has been created.")
+        repo = user.create_repo(GITHUB_REPO)
+        print(f"Repository '{GITHUB_REPO}' has been created.")
+
 
 def get_file_checksum(file_path):
     with open(file_path, 'rb') as f:
@@ -57,6 +59,7 @@ def get_list_of_branches():
     output = result.std_out.decode('utf-8')
     paths = re.findall(r'\s+(\$\/\S+)', output)
     projects = {}
+
     for path in paths:
         match = re.match(r'\$/([^/]+)/', path)
         if match:
@@ -68,16 +71,21 @@ def get_list_of_branches():
     list(projects.keys())
     return projects
 
+
 def source_list_of_files(directory, output_file):
     warnings.filterwarnings("ignore")
+
     source_file_count = 0
     source_folder_count = 0
     source_dir_total_size = 0
     source_dir_list = []
+
     ignore = ['.git', '.gitignore','.gitattributes'] # Add ignore list here
+
     for root, dirs, files in os.walk(directory):
         dirs[:] = [d for d in dirs if d not in ignore] # Exclude dirs in ignore list
         files[:] = [f for f in files if f not in ignore] # Exclude files in ignore list
+
         source_file_count += len(files)
         source_folder_count += len(dirs)
         for file in files:
@@ -85,9 +93,11 @@ def source_list_of_files(directory, output_file):
             file_size = os.path.getsize(file_path)
             source_dir_total_size += file_size
             source_dir_list.append((file_path, file_size, get_file_checksum(file_path)))
+
         for dir in dirs:
             dir_path = os.path.join(root, dir)
             source_dir_list.append((dir_path, 0, ""))
+
     with open(output_file, 'w') as f:
         warnings.filterwarnings("ignore")
         f.write(f"Number of folders: {source_folder_count}\n")
@@ -108,6 +118,8 @@ def source_list_of_files(directory, output_file):
                 temp_file_checksum = get_file_checksum(temp_file_path)
                 f.write('{}{} ({}, {})\n'.format(subindent, file, temp_file_size, temp_file_checksum))
 
+
+
 def getting_binary_extensions(defpath):
     warnings.filterwarnings("ignore")
     binary_extensions = []
@@ -125,6 +137,9 @@ def getting_binary_extensions(defpath):
                         binary_extensions.append(extension)
     return [ext for ext in binary_extensions if ext.startswith('.')]
 
+
+
+
 def upload_regex_binary_to_git_lfs(directory_path, regex_file_path, branch_name):
     warnings.simplefilter("ignore")
     regex_patterns = []
@@ -132,6 +147,7 @@ def upload_regex_binary_to_git_lfs(directory_path, regex_file_path, branch_name)
         reader = csv.reader(f)
         for row in reader:
             regex_patterns.append(row[0])
+    
     subprocess.run(['git', 'stash', 'save', 'Stashing changes'], cwd=directory_path)
     b = subprocess.run(['git', 'checkout', branch_name], cwd=directory_path)
 
@@ -140,6 +156,7 @@ def upload_regex_binary_to_git_lfs(directory_path, regex_file_path, branch_name)
             file_path = os.path.join(root, file)
             file_ext = os.path.splitext(file)[1].lower()
             file_size = os.path.getsize(file_path)
+
             for pattern in regex_patterns:
                 if re.search(pattern, file) or file_size > 30 * 1024 * 1024:  # 30 MB in bytes
                     try:
@@ -150,7 +167,10 @@ def upload_regex_binary_to_git_lfs(directory_path, regex_file_path, branch_name)
                         f = subprocess.run(['git', 'commit', '-m', f'Moving {file} to Git LFS'], cwd=root)
                     except subprocess.CalledProcessError as e:
                         print(f"Error occurred: {e.stderr}")
+
     c = subprocess.run(['git', 'push'], cwd=directory_path)
+
+
 
 def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
     warnings.simplefilter("ignore")
@@ -175,6 +195,7 @@ def upload_binary_to_git_lfs(directory_path, extensions_file_path, branch_name):
                     print(f"Error occurred: {e.stderr}")
     c = subprocess.run(['git', 'push'], cwd=directory_path)
 
+
 def file_with_extension(directory):
     warnings.filterwarnings("ignore")
     file_name = cwd+'//Reports.txt'
@@ -193,20 +214,26 @@ def file_with_extension(directory):
                     for file in files:
                         if file not in ('.gitignore', '.git', 'HEAD', 'cleanup','5e5d0a65b4157d1a521e6e37272f7a33deae11b36fadcfb3be50888a9e7301d8'):
                             f.write(file + "\n")
+
     except Exception as e:
         print("An error occurred:", str(e))
 
 def target_list_of_files(directory, output_file):
     warnings.filterwarnings("ignore")
+    
     file_count = 0
     folder_count = 0
     total_size = 0
     target_dir_list = []
+
     ignore = ['.git', '.gitignore','.github','.gitattributes']
     with open(output_file, 'w') as f:
         for root, dirs, files in os.walk(directory):
+
+
             dirs[:] = [d for d in dirs if d not in ignore] 
             files[:] = [f for f in files if f not in ignore]
+                
             file_count += len(files)
             folder_count += len(dirs)
             for file in files:
@@ -215,14 +242,19 @@ def target_list_of_files(directory, output_file):
                 file_checksum = get_file_checksum(file_path)
                 total_size += file_size
                 target_dir_list.append((file_path, file_size, file_checksum))
+                
             for dir in dirs:
                 dir_path = os.path.join(root, dir)
                 target_dir_list.append((dir_path, 0, ""))
+
         f.write(f"Number of folders: {folder_count}\n\n")
         f.write(f"Files in Git LFS: \n")
+
     temp_count = 0
     output = subprocess.check_output(['git', 'lfs', 'ls-files', '--size'], cwd=directory)
     output = output.decode('utf-8')
+
+
     with open(output_file, 'a') as f:
         for line in output.splitlines():
             line_parts = line.split()
@@ -239,12 +271,15 @@ def target_list_of_files(directory, output_file):
                 elif file_type == 'KB':
                     file_size = file_size * 1024  # convert KB to MB
                 total_size+=file_size
+
         f.write(f"Git lfs file count: {temp_count} \n\n")
         f.write(f"Number of files including git-lfs: {file_count}\n\n")
         f.write(f"Total size: {total_size / (1024*1024):.2f} MB\n\n")
         f.write(f"List of files with their size and checksum: \n")
         for file_path, file_size, file_checksum in target_dir_list:
             f.write(f"{file_path} ({file_size}) {file_checksum}\n")
+
+
 
 def clone_target_git():
     warnings.filterwarnings("ignore")
@@ -256,3 +291,7 @@ def clone_target_git():
     file_with_extension(clone_directory)
     target_list_of_files(clone_directory, output_file_name)
     
+    # difference = list(set(source_dir_list) - set(target_dir_list))
+    # print("The difference between the two lists is:", difference)
+
+

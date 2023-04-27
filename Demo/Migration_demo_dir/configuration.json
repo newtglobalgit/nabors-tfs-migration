@@ -15,7 +15,7 @@
     },
     "Target": {
       "$type": "TfsTeamProjectConfig",
-      "Collection": "https://dev.azure.com/NewtADTF/",
+      "Collection": "https://dev.azure.com/NewtADO/",
       "Project":"catcore",
       "ReflectedWorkItemIDFieldName": "Custom.ReflectedWorkItemId",
       "AllowCrossProjectLinking": false,

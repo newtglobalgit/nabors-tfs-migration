@@ -1,13 +1,17 @@
-"""
-  Secrets / Sensitive data store
-"""
+# secrets / sensitive data store
 
 cred = {
-    'USER': "",
-    'PASSWORD': "",
-    'token': "",
+    'USER': "", ## Windows server credentials
+    'PASSWORD': "", ## Windows server credentials
+    'token': "", ## GITHUB personal access token
     'api_base_url': "https://api.github.com",
-    'owner': ""
+    'owner': "", ## GITHUB Organization User ID
+    'org': ""
+}
+
+server = {
+    'host': "http://192.168.3.197",
+    'https_url': "https://192.168.3.197"
 }
 
 data = {
@@ -30,13 +34,10 @@ server_urls = {
 path = {
     'repos': "C:/Users/Administrator/Source/Repos/",
     'loc_repo': "C:/TFS/tfs-migration12",
-    'csv_file' : r"C:\Final_Script\extension.csv",
+    'csv_file' : "C://demo-tfs//Demo//extension.csv",
     'git_repo' : "https://github.com/{owner}/CatCore.git",
-    'git_repo_path' : "C://usr//CatCore"
-}
-
-commit = {
-    'message': "dummy folder creation"
+    'git_repo_path' : "C://Demo//usr//CatCore",
+    'script_path': "C://development//demo//"
 }
 
 server = {

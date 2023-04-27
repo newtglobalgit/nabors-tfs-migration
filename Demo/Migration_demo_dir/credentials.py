@@ -1,17 +1,17 @@
 # secrets / sensitive data store
 
 cred = {
-    'USER': "", ## Windows server credentials
-    'PASSWORD': "", ## Windows server credentials
-    'token': "", ## GITHUB personal access token
+    'USER': "", ## TFS windows User credentials
+    'PASSWORD': "", ## TFS windows User credentials
+    'token': "", ## GITHUB Organization user token
     'api_base_url': "https://api.github.com",
-    'owner': "", ## GITHUB Organization User ID
-    'org': ""
+    'owner': "" ## GITHUB Organization user
 }
 
 server = {
     'host': "http://192.168.3.197",
     'https_url': "https://192.168.3.197"
+
 }
 
 data = {
@@ -34,21 +34,26 @@ server_urls = {
 path = {
     'repos': "C:/Users/Administrator/Source/Repos/",
     'loc_repo': "C:/TFS/tfs-migration12",
-    'csv_file' : "C://demo-tfs//Demo//extension.csv",
+    'csv_file' : "C://Users//{windows_user}//Desktop//New folder//demo-tfs//Demo//extension.csv",
     'git_repo' : "https://github.com/{owner}/CatCore.git",
-    'git_repo_path' : "C://Demo//usr//CatCore",
-    'script_path': "C://development//demo//"
+    'git_repo_path' : "C://Demo//usr//CatCore"
+}
+
+
+commit = {
+    'message': "dummy folder creation"
 }
 
 server = {
     'host': "http://192.168.3.197",
-    'https_url': "https://192.168.3.197"
+    'https_url': "https://192.168.3.197",
+    'windows_user': "" ## Windows local user 
 }
 
 projects = {
     'project1': "dprog",
     'project2': "Demo",
-    'project3': "tfs-test",
+    'project3': "tfs-ado",
     'project4': "Sample_Practice_Project",
     'project5': "CatCore"
 }

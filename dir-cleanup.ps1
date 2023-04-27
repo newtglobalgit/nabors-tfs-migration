@@ -1,0 +1,1 @@
+﻿Remove-Item -Path C:/Demo -Recurse -Force
