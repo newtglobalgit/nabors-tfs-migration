@@ -5,7 +5,8 @@ cred = {
     'PASSWORD': "", ## TFS windows User credentials
     'token': "", ## GITHUB Organization user token
     'api_base_url': "https://api.github.com",
-    'owner': "" ## GITHUB Organization user
+    'owner': "", ## GITHUB Organization user
+    'org': ""
 }
 
 data = {
