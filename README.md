@@ -19,6 +19,7 @@ graph LR
 A[TFS on-premise Server] -- Source Code --> B[Github Repo]
 A -- Binary files --> C[Github LFS]
 A -- Work Item Azure DevOps --> D[Azure Boards]
+A -- User / Access control --> E[Github Organization]
 ```
 
 ## Pre-requisites:
