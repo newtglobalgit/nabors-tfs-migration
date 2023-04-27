@@ -28,11 +28,18 @@ A -- User / Access control --> D
 - Github credentials - 1. User id and token
 - git tfs 
 
+## Code file details:
+main.py - performs the source code migration and workitem migration.
+library.py - defines the methods which are needed and reusability of methods across the execution.
+credentials.py - defines the secrets / sensitive details in the file store.
 
 ## Program execution in sequential order: 
 First of all we have to execute 
 
-- python main.py
+> pip install -r requirements.txt
+
+> python main.py
+
 This script will give a output list of all the repos that is there in remote tfs server.
 
 It will give two txt file 
