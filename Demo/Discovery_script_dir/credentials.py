@@ -52,8 +52,3 @@ projects = {
     'project5': "CatCore",
     'project6': "tfs-ado"
 }
-
-ado = {
-    'org1': "",
-    'token': ""
-}
