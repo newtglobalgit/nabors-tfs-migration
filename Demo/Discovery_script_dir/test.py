@@ -1,5 +1,9 @@
 from github import Github
 import pandas as pd
+from credentials import cred
+
+token = cred.get('token')
+owner = cred.get('owner')
 
 def get_file_structure_to_excel(access_token, repo_name, branch_name,user_name):
     g = Github(access_token)
@@ -31,4 +35,4 @@ def get_file_structure_to_excel(access_token, repo_name, branch_name,user_name):
     file_structure.to_excel("file_structure_{}.xlsx".format(branch_name), index=False)
 
 
-get_file_structure_to_excel("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", "CatCore", "cleanup","UjjAwal021")
+get_file_structure_to_excel(token, "CatCore", "cleanup",owner)
