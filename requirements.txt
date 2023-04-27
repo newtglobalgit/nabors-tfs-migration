@@ -1,0 +1,13 @@
+dohq-tfs
+requests_ntlm
+pprint
+pygithub
+chardet2
+requests
+pywinrm
+openpyxl
+subprocess32
+urllib3
+charset-normalizer
+azure-devops
+pandas
