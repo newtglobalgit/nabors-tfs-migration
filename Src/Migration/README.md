@@ -21,9 +21,9 @@ A -- User / Access control Migration --> E[ADO user privilege migration]
 - Team Foundation Power Tools Extension for Visual Studio
 
 ## Code file details:
-main.py - performs the source code migration and work item migration.
-library.py - defines the methods which are needed and reusability of methods across the execution.
-credentials.py - defines the secrets / sensitive details in the file store.
+- main.py - performs the source code migration and work item migration.
+- library.py - defines the methods which are needed and reusability of methods across the execution.
+- credentials.py - defines the secrets / sensitive details in the file store.
 
 ## Program execution in sequential order: 
 
