@@ -30,15 +30,14 @@ A -- User / Access control --> D
 - git tfs 
 
 ## Code file details:
-main.py - performs the source code migration and workitem migration.
-library.py - defines the methods which are needed and reusability of methods across the execution.
-credentials.py - defines the secrets / sensitive details in the file store.
+- main.py - performs the source code migration and workitem migration.
+- library.py - defines the methods which are needed and reusability of methods across the execution.
+- credentials.py - defines the secrets / sensitive details in the file store.
 
 ## Program execution in sequential order: 
 First of all we have to execute 
 
 > pip install -r requirements.txt
-
 > python main.py
 
 This script will give a output list of all the repos that is there in remote tfs server.
@@ -53,11 +52,7 @@ First this script will ask for a txt file for giving list of extension i.e.  out
 
 This script will create a new repo in github using user credentials and upload the tfs repos to git.
 
-## Development in progress:
-- Keyword search and find for filename and file type in the TFS server. 
-
 ## Goals:
 - Migration of the Team Foundation Version Control[TFVC] source code with history of commits and branches to GitHUB repository.
 - Migration of the Team Foundation Version Control[TFVC] work items with history of issues and changes to Azure DevOps Services.
-
 - Migration of the Team Foundation server [TFVC] User and access control to GitHUB and ADO
