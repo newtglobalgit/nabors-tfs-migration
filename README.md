@@ -3,7 +3,7 @@ TFS (Team Foundation Server) and Git are both version control systems that are u
 
 ## Architecture
 
-![Architecture](./Architecture/tfs_migration_-_architecture.png)  
+![Architecture](./architecture/tfs_migration_-_architecture.png)  
 
 ## Flow Chart
 
