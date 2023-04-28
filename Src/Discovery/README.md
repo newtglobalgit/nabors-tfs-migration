@@ -27,6 +27,7 @@ credentials.py - defines the secrets / sensitive details in the file store.
 ## Program execution in sequential order: 
 
 > pip install -r requirements.txt
+
 > python main.py
 
 ## Goals:
