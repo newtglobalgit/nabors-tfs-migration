@@ -1,6 +1,5 @@
 ## Description:
-TFS (Team Foundation Server) and Git are both version control systems that are used to manage source code. However, they have some fundamental differences in their architecture, workflow, and user interface.
-Here are the general steps involved in Discovery and migrating source code, work items and user privileges from TFS to GitHub & ADO [Azure DevOps]:
+TFS (Team Foundation Server) and Git are both version control systems that are used to manage source code. However, they have some fundamental differences in their architecture, workflow, and user interface. Here are the general steps involved in Discovery and migrating source code, work items and user privileges from TFS to GitHub & ADO [Azure DevOps]:
 
 ## - Discovery
 - Discover the collection wise projects and get it as a report to be shared with the team.
@@ -28,9 +27,9 @@ A -- User / Access control --> D
 - git tfs 
 
 ## Code file details:
-main.py - performs the source code migration and workitem migration.
-library.py - defines the methods which are needed and reusability of methods across the execution.
-credentials.py - defines the secrets / sensitive details in the file store.
+- main.py - performs the source code migration and work item migration.
+- library.py - defines the methods which are needed and reusability of methods across the execution.
+- credentials.py - defines the secrets / sensitive details in the file store.
 
 ## Program execution in sequential order: 
 First of all we have to execute 
@@ -39,9 +38,7 @@ First of all we have to execute
 
 > python main.py
 
-This script will give a output list of all the repos that is there in remote tfs server.
-
-It will give two txt file 
+This script will give a output list of all the repos that is there in remote tfs server. It will give two txt file 
 - - output_dir.txt
      In this txt file we will get all the directory that is there in the project.
 - - output_file.txt
