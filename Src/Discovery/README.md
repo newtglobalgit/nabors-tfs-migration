@@ -12,9 +12,12 @@ A -- User / Access control Discovery --> D[Discovery Reports for Github Organiza
 
 ## Pre-requisites:
 - python - Minimum 3.9 or Greater
-- packages - requirement.txt
+- packages - requirements.txt
 - Github credentials - 1. User id and token
-- git tfs 
+- Ado credentials - Org, token
+- git tfs
+- Visual Studio 2013/2019/2022
+- Team Foundation Power Tools Extension for Visual Studio
 
 ## Code file details:
 main.py - performs the source code migration and workitem migration.
@@ -22,12 +25,9 @@ library.py - defines the methods which are needed and reusability of methods acr
 credentials.py - defines the secrets / sensitive details in the file store.
 
 ## Program execution in sequential order: 
-First of all we have to execute 
 
 > pip install -r requirements.txt
 > python main.py
-
-This script will give a output list of all the repos that is there in remote tfs server.
 
 ## Goals:
 - Discovery of the Team Foundation Version Control[TFVC] source code with history of commits and branches to GitHUB repository.
