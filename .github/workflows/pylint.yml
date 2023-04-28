@@ -20,4 +20,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files 'Demo/*.py') --fail-under=9 --max-line-length=300
+        pylint $(git ls-files 'Src/*.py') --fail-under=9 --max-line-length=300
