@@ -1,5 +1,5 @@
 ## Summary:
-TFS (Team Foundation Server) and Git are both version control systems that are used to manage source code. However, they have some fundamental differences in their architecture, workflow, and user interface. Here are the general steps involved in migrating source code, work items and user privileges from TFS to GitHub & ADO [Azure DevOps].
+TFS (Team Foundation Server) and Git are both version control systems that are used to manage source code. However, they have some fundamental differences in their architecture, workflow, and user interface. Here are the general ways involved in migrating source code, work items and user privileges from TFS to GitHub & ADO [Azure DevOps].
 
 ## Architecture
 
